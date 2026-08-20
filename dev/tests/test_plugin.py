@@ -2,7 +2,7 @@
 
 A plugin is only ever exercised by someone else's client, so these tests are
 the only feedback loop before publishing: they validate the package against
-the official Agent Plugins 1.0.0 schemas (vendored in scripts/schemas/, so the
+the official Agent Plugins 1.0.0 schemas (vendored in dev/schemas/, so the
 suite stays offline), check the skill against the Agent Skills rules clients
 enforce, and make sure the generated Claude Code files and the documentation
 still agree on the endpoint.
@@ -15,8 +15,8 @@ import pytest
 
 import build_plugin as bp
 
-REPO_ROOT = Path(__file__).resolve().parent.parent
-# The repository root is the plugin root.
+# dev/tests/test_plugin.py -> the repository root, which is the plugin root.
+REPO_ROOT = Path(__file__).resolve().parents[2]
 PLUGIN_DIR = REPO_ROOT
 
 
@@ -94,7 +94,7 @@ def test_no_stray_component_locations():
 
 def test_generated_files_are_up_to_date():
     """Claude Code does not read the portable files, so these are generated.
-    If this fails, run: python scripts/build_plugin.py"""
+    If this fails, run: python dev/build_plugin.py"""
     bp.build(check_only=True)
 
 
@@ -131,7 +131,7 @@ def test_marketplace_points_at_the_published_repository(manifest):
 
 DOCS_QUOTING_THE_ENDPOINT = [
     "README.md",
-    "CLAUDE.md",
+    "dev/README.md",
 ]
 
 

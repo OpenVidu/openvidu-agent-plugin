@@ -254,6 +254,8 @@ skills/openvidu-version-edition-product/   the pinning skill
 .claude-plugin/plugin.json      Claude Code manifest        ─┐ generated: Claude Code
 .claude-plugin/marketplace.json Claude Code marketplace      │ does not read the
 .mcp.json                       Claude Code MCP config      ─┘ portable files yet
+dev/                            not part of the plugin: how it is built,
+                                validated and published
 ```
 
 ## Available tools
@@ -405,3 +407,15 @@ This repository is what gets installed: the plugin manifest, the MCP server
 configuration, and the `openvidu-version-edition-product` skill.
 Report issues with any of those here. The documentation server behind the
 MCP endpoint is maintained separately by the OpenVidu team.
+
+## Development
+
+Everything about building, validating and publishing the package lives in
+**[`dev/README.md`](dev/README.md)**: what is generated and why, how the
+version numbers work, how to add a skill, and the checklist before a release.
+
+```bash
+pip install -r dev/requirements.txt
+python dev/build_plugin.py    # validate the package + regenerate the Claude Code files
+pytest
+```

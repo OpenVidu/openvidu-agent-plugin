@@ -21,8 +21,8 @@ Code only looks at the root, so the generated files sit at the root. No
 Agent Plugins client rejects extra files, and the portable trio is untouched.
 
 Usage:
-    python scripts/build_plugin.py            # validate and regenerate
-    python scripts/build_plugin.py --check    # fail if anything is stale
+    python dev/build_plugin.py            # validate and regenerate
+    python dev/build_plugin.py --check    # fail if anything is stale
 """
 
 import argparse
@@ -31,6 +31,7 @@ import re
 import sys
 from pathlib import Path
 
+# dev/build_plugin.py -> the repository root.
 REPO_ROOT = Path(__file__).resolve().parent.parent
 # The repository root is the plugin root: every client installs an Agent Plugin
 # from a location whose ROOT is the package.
@@ -260,7 +261,7 @@ def build(check_only: bool = False) -> list[Path]:
         names = ", ".join(p.relative_to(REPO_ROOT).as_posix() for p in stale)
         raise PluginError(
             f"generated files are out of date ({names}). "
-            "Run: python scripts/build_plugin.py"
+            "Run: python dev/build_plugin.py"
         )
 
     print(f"Plugin '{manifest['name']}' v{manifest.get('version', '?')} "

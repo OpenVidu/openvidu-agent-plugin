@@ -1,4 +1,4 @@
-# Python (scripts/ and tests/ are the validation tooling, not shipped code)
+# Python (dev/ is the validation tooling, not shipped code)
 __pycache__/
 *.py[cod]
 .pytest_cache/

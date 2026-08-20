@@ -1,12 +1,12 @@
 # Submitting the plugin to Anthropic's Claude Code marketplace
 
-This is about getting this plugin (see [`../CLAUDE.md`](../CLAUDE.md)) listed
+This is about getting this plugin (see [`README.md`](README.md)) listed
 in one of the marketplaces Claude Code ships with, so a user doesn't have to
 run
 `/plugin marketplace add OpenVidu/openvidu-agent-plugin` themselves, and so
 they get updates the same way they'd get updates for any Anthropic-maintained
 plugin, instead of the auto-update-off-by-default behavior of a third-party
-marketplace (see [Publishing](../CLAUDE.md#publishing)).
+marketplace (see [Publishing](README.md#publishing)).
 
 ## Two marketplaces, and only one takes submissions
 
@@ -26,7 +26,7 @@ isn't something that can be requested, and this doc doesn't try to.
 
 - [ ] The plugin is already published at
       `OpenVidu/openvidu-agent-plugin` and installable directly from it (the
-      ["Before the first publish" checklist](../CLAUDE.md#before-the-first-publish))
+      ["Before the first publish" checklist](README.md#before-the-first-publish))
       — the community marketplace entry just points at that repository, so it
       has to work on its own first.
 - [ ] `claude plugin validate .` passes locally, ideally with
@@ -65,7 +65,7 @@ Anthropic's own documentation does not describe a review-time SLA.
 - **Anthropic's CI bumps that pin automatically** whenever new commits land
   on `OpenVidu/openvidu-agent-plugin`. There is no separate re-submission
   step for an ordinary update — pushing to this repository (see
-  [Publishing](../CLAUDE.md#publishing)) is enough once the plugin has been
+  [Publishing](README.md#publishing)) is enough once the plugin has been
   accepted once.
 - The public catalog (`marketplace.json` in
   [`anthropics/claude-plugins-community`](https://github.com/anthropics/claude-plugins-community))
