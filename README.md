@@ -245,9 +245,9 @@ needs them.
   differ between versions (pages identical across all of them say so, so the
   warning means something when it appears).
 
-The edition and the product are not in the index at all. The server is
-versioned and nothing more, so reading its answers for the right edition and
-product is the agent's side of the job — see
+The version is what you pass to the server — the only one of the three the
+index carries. The edition and the product guide the coding agent instead:
+what to search for, and how to read what comes back. See
 [What OpenVidu are you developing your app for?](#what-openvidu-are-you-developing-your-app-for).
 
 ### Example prompts
