@@ -11,8 +11,11 @@ whatever it memorised during training, it searches and reads the real pages,
 **for the OpenVidu deployment you are actually running**: the right version,
 read for the right edition and the right product.
 
-It is an [Agent Plugins 1.0](https://agent-plugins.org) package with two kinds
-of component, and they are worth telling apart:
+It is both an [Agent Plugins 1.0](https://agent-plugins.org) package and a
+[Claude Code plugin](https://code.claude.com/docs/en/plugins): Claude Code has
+its own plugin format rather than the standard, so this package carries the
+files for both and one install works in either. What you get is two kinds of
+component, and they are worth telling apart:
 
 - **an MCP server** — `openvidu-docs`, hosted at
   `https://docs-mcp.openvidu.io/mcp`. This is where the documentation comes
@@ -44,8 +47,8 @@ later.
 /plugin install openvidu@openvidu
 ```
 
-Claude Code has its own plugin format rather than Agent Plugins, so the
-package ships both; the commands above are all you need.
+The two commands above are all you need: the package carries Claude Code's
+own plugin files alongside the portable ones.
 
 If the plugin is listed in Anthropic's community marketplace (check with
 `/plugin` → **Discover**, or search
