@@ -42,9 +42,11 @@ Two routes, and your tool decides which is available:
   action, and it brings the `openvidu-version-edition-product` skill along
   with the MCP server. Available in tools that implement
   [Agent Plugins 1.0](https://agent-plugins.org).
-- **[Option B](#option-b--add-the-server-url-by-hand): the server URL by
-  hand.** Works everywhere, including tools that haven't adopted the standard
-  yet. You get the tools, not the skill.
+- **[Option B](#option-b--add-the-server-url-by-hand): by hand.** Works
+  everywhere, including tools that haven't adopted the standard yet. Two
+  steps instead of one — [the server](#option-b--add-the-server-url-by-hand)
+  and then [the skill](#adding-the-skill-by-hand) — and neither updates
+  itself afterwards.
 
 Both end up talking to the same server, and you can move from one to the
 other later.
@@ -129,8 +131,9 @@ current source of truth for what each one supports.
 
 Nothing here needs the plugin: it is the same server, configured directly.
 Use it for tools that don't support Agent Plugins yet, or when you'd rather
-not install anything. You get the tools, but not the
-`openvidu-version-edition-product` skill.
+not install anything. This gets you the tools; the
+`openvidu-version-edition-product` skill is a
+[second, separate step](#adding-the-skill-by-hand).
 
 #### Claude Code
 
@@ -199,12 +202,94 @@ The usual shape of the configuration file is:
 Check your client's own documentation for where that file lives and whether it
 calls the field `type`, `transport`, or nothing at all.
 
+
+### Adding the skill by hand
+
+Option B gets you the tools. This gets you the skill, and the two belong
+together: the skill's own procedure is to call
+`resolve_openvidu_version_edition_product`, so without the server configured
+it has nothing to call.
+
+The skill is a single file —
+[`skills/openvidu-version-edition-product/SKILL.md`](skills/openvidu-version-edition-product/SKILL.md)
+— in the [Agent Skills](https://agentskills.io) format that most clients now
+read straight off disk. Installing it by hand means copying that file into a
+directory the client scans. **The directory name must be the skill name**
+(`openvidu-version-edition-product`): it has to match the `name` in the file's
+frontmatter, and a mismatch makes the client skip the skill silently.
+
+| Client | For one project | For every project |
+|---|---|---|
+| Claude Code | `.claude/skills/` | `~/.claude/skills/` |
+| Cursor | `.agents/skills/`, `.cursor/skills/` | `~/.agents/skills/`, `~/.cursor/skills/` |
+| VS Code (GitHub Copilot) | `.github/skills/`, `.agents/skills/` | `~/.copilot/skills/`, `~/.agents/skills/` |
+| Codex | — | `~/.codex/skills/` (or `$CODEX_HOME/skills`) |
+| Kiro | `.kiro/skills/` | `~/.kiro/skills/` |
+
+For anything not listed, the
+[client showcase](https://agentskills.io/clients) links each one's own
+documentation, which is where the current paths live.
+
+Two things are worth reading out of that table. Cursor and VS Code also accept
+`.claude/skills/` and `~/.claude/skills/` for backward compatibility, which
+makes **`.claude/skills/` the single project directory that covers Claude Code,
+Cursor and Copilot at once** — the pragmatic choice for a repository shared
+across a team today. And `.agents/skills/` is the vendor-neutral location the
+ecosystem is converging on: Cursor and VS Code read it, Claude Code does not
+yet.
+
+For every project, on Claude Code:
+
+```bash
+mkdir -p ~/.claude/skills/openvidu-version-edition-product
+curl -fsSL -o ~/.claude/skills/openvidu-version-edition-product/SKILL.md \
+  https://raw.githubusercontent.com/OpenVidu/openvidu-agent-plugin/main/skills/openvidu-version-edition-product/SKILL.md
+```
+
+For one project, shared with your team, swap the destination for the
+project-level path from the table and commit the file, so a checkout brings the
+skill with it:
+
+```bash
+mkdir -p .claude/skills/openvidu-version-edition-product
+curl -fsSL -o .claude/skills/openvidu-version-edition-product/SKILL.md \
+  https://raw.githubusercontent.com/OpenVidu/openvidu-agent-plugin/main/skills/openvidu-version-edition-product/SKILL.md
+```
+
+#### Checking it loaded
+
+Claude Code lists it in `/skills`, and picks up a newly added skill without a
+restart — unless you created the top-level skills directory itself mid-session,
+which needs one. In VS Code, type `/` in chat, or run **Chat: Open
+Customizations** from the Command Palette. Elsewhere, the skill's name appears
+wherever your client lists what it has loaded.
+
+#### Clients that take skills through settings, not a directory
+
+Claude Desktop and claude.ai don't read a folder on your disk: skills are
+enabled for your account, from **Customize** in the Desktop app sidebar or the
+skill settings on claude.ai.
+
+#### Clients that don't do skills at all
+
+You lose nothing that can't be written down. The whole point of the skill is to
+establish your deployment's version, edition and product once and record them —
+so do that part yourself, as described in
+[Say it once, in writing](#say-it-once-in-writing), and the assistant reads
+them from your `AGENTS.md` on every future session without needing the skill.
+
 ## Keeping the plugin updated
 
-Only [Option A](#option-a--install-the-plugin) has anything to update — the
-skill and the server address inside the plugin package. [Option B](#option-b--add-the-server-url-by-hand)
-is just a URL: the server behind it is versioned per documentation release
-(see below), not per plugin release, so there's nothing to refresh there.
+Only [Option A](#option-a--install-the-plugin) updates itself. What it keeps
+current is the skill and the server address inside the plugin package; the
+server behind that address is versioned per documentation release (see below),
+not per plugin release, so the URL itself never goes stale — which is why
+[Option B](#option-b--add-the-server-url-by-hand) has nothing to refresh.
+
+A **hand-copied skill is a copy**, though, and nothing tells you when it moves
+on: re-run the `curl` from
+[Adding the skill by hand](#adding-the-skill-by-hand) to refresh it, or switch
+to Option A and let the client manage it.
 
 How you get a new plugin version depends entirely on the client, and on
 *how* you added it:
@@ -370,6 +455,14 @@ servers in plugins on the
 [compatible clients list](https://agent-plugins.org/compatible-clients). If it
 only loads skills, use [Option B](#option-b--add-the-server-url-by-hand) for
 the tools.
+
+**The skill never activates.** Three usual causes, in order of likelihood:
+the directory name doesn't match the `name` in the frontmatter (both must be
+`openvidu-version-edition-product`); the directory isn't one your client
+actually scans — check it against the table in
+[Adding the skill by hand](#adding-the-skill-by-hand); or the skill loaded fine
+but had nothing to do, because the version, edition and product were already
+pinned in your `AGENTS.md`, which is the skill working as intended.
 
 **The client shows the server as failed or offline.** Check the transport is
 HTTP, not `sse` or `stdio`; this server is Streamable HTTP only. And the URL
