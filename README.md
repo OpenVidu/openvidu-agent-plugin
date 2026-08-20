@@ -175,6 +175,59 @@ dev/                            not part of the plugin: how it is built,
                                 validated and published
 ```
 
+## What OpenVidu are you developing your app for?
+
+Every answer this package produces depends on it, and nothing in the package
+can work it out alone: **a remote server cannot see your project**, and a skill
+only knows what your repository tells it. Three facts have to come from your
+side:
+
+- **version** — the documentation differs between releases. It is what the
+  documentation server indexes by.
+- **edition** — CE or PRO; PRO has features CE does not.
+- **product** — OpenVidu Platform (your app uses the LiveKit SDKs) or
+  OpenVidu Meet (its REST API and the `<openvidu-meet>` web component). Two
+  different APIs.
+
+Without them the answers don't get vaguer, they get confidently wrong — right
+documentation for a release you aren't running, or a feature that only exists
+in the edition you don't have. It is also why this sits outside both
+components rather than inside either: the documentation server indexes by
+version and knows nothing at all about edition or product, and a skill can only
+act on what it has been told. Establish the three, write them down, and
+everything downstream is aimed at the same target.
+
+### Finding them out
+
+Ask your assistant to work it out and it will: the
+`resolve_openvidu_version_edition_product` tool hands it the procedure —
+which product your code is using, where your deployment's URL and credentials
+live, and the endpoint that reports version and edition. It follows a few
+rules while doing so: it never prints your credentials, and it asks before
+sending a request to anything other than `localhost`. A skill can make it do
+this without being asked, and record the answer — see
+[The skills](#the-skills).
+
+**Do not read the version off your dependencies**, and don't let your
+assistant do it either. `livekit-client`, `livekit-server-sdk`,
+`openvidu-browser` and the web components are *client* SDKs; their version
+numbers have no relationship with the OpenVidu server's, and they say nothing
+about CE vs PRO. The server's tool descriptions tell the model this
+explicitly, but it is worth knowing yourself.
+
+### Say it once, in writing
+
+So you don't repeat it in every conversation, put this in your project's
+`AGENTS.md` or `CLAUDE.md`:
+
+```markdown
+This project connects to an OpenVidu 3.9.0 pro deployment, using OpenVidu Meet.
+When querying the OpenVidu documentation MCP, always pass version="3.9.0",
+and read the answers for that edition and product.
+```
+
+Facts only: never put credentials in that file.
+
 ## The documentation server
 
 Everything under this heading concerns one component: the `openvidu-docs` MCP
@@ -204,19 +257,7 @@ Transport: **Streamable HTTP**. No API key, no login required.
 You don't call these yourself — your assistant does, when the conversation
 needs them.
 
-### Your deployment: the part worth reading
-
-An OpenVidu answer is only right for one deployment, and **a remote server
-cannot see your project**, so three things have to reach it from your side:
-
-- **version** — the documentation differs between releases. It is what the
-  server indexes by.
-- **edition** — CE or PRO; PRO has features CE does not.
-- **product** — OpenVidu Platform (your app uses the LiveKit SDKs) or
-  OpenVidu Meet (its REST API and the `<openvidu-meet>` web component). Two
-  different APIs.
-
-The rules the server follows for the version:
+### How the server handles the version
 
 - Every tool takes an optional `version`. Without it, the newest indexed
   version is used.
@@ -227,37 +268,10 @@ The rules the server follows for the version:
   differ between versions (pages identical across all of them say so, so the
   warning means something when it appears).
 
-The edition and the product are not in the index at all: they are how your
-assistant should *read* what it finds there.
-
-#### Finding them out
-
-Ask your assistant to work it out and it will: the
-`resolve_openvidu_version_edition_product` tool hands it the procedure —
-which product your code is using, where your deployment's URL and credentials
-live, and the endpoint that reports version and edition. It follows a few
-rules while doing so: it never prints your credentials, and it asks before
-sending a request to anything other than `localhost`.
-
-**Do not read the version off your dependencies**, and don't let your
-assistant do it either. `livekit-client`, `livekit-server-sdk`,
-`openvidu-browser` and the web components are *client* SDKs; their version
-numbers have no relationship with the OpenVidu server's, and they say nothing
-about CE vs PRO. The server's tool descriptions tell the model this
-explicitly, but it is worth knowing yourself.
-
-#### Say it once, in writing
-
-So you don't repeat it in every conversation, put this in your project's
-`AGENTS.md` or `CLAUDE.md`:
-
-```markdown
-This project connects to an OpenVidu 3.9.0 pro deployment, using OpenVidu Meet.
-When querying the OpenVidu documentation MCP, always pass version="3.9.0",
-and read the answers for that edition and product.
-```
-
-Facts only: never put credentials in that file.
+The edition and the product are not in the index at all. The server is
+versioned and nothing more, so reading its answers for the right edition and
+product is the agent's side of the job — see
+[What OpenVidu are you developing your app for?](#what-openvidu-are-you-developing-your-app-for).
 
 ### Example prompts
 
@@ -317,7 +331,7 @@ changing.
 
 | Skill | What it does |
 |---|---|
-| `openvidu-version-edition-product` | Establishes the three facts every OpenVidu answer depends on — version, edition and product — and writes them into your `AGENTS.md` / `CLAUDE.md`, so they are settled once instead of every session. The reasoning is in [Your deployment](#your-deployment-the-part-worth-reading) |
+| `openvidu-version-edition-product` | Establishes the three facts every OpenVidu answer depends on — version, edition and product — and writes them into your `AGENTS.md` / `CLAUDE.md`, so they are settled once instead of every session. The reasoning is in [What OpenVidu are you developing your app for?](#what-openvidu-are-you-developing-your-app-for) |
 
 Skills are advisory: the agent decides when one is relevant, from its
 description alone, and only then reads the rest. Some clients also let you
