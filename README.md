@@ -27,15 +27,11 @@ component, and they are worth telling apart:
 
 ## Installation
 
-Install the plugin and everything inside it arrives configured, however many
-components it grows to hold. You need a client that implements
-[Agent Plugins 1.0](https://agent-plugins.org); find yours below.
-
-If your client isn't there yet, or you'd rather not install anything, the same
-components can be configured by hand, separately. That is a longer story, so it
-has its own page: **[Setting it up without the plugin](docs/manual-setup.md)**.
-Both routes end up talking to the same server, and you can move between them
-later.
+Find your tool below. One caveat first:
+[Agent Plugins 1.0](https://agent-plugins.org) was only published on 11 August
+2026, so support for it is new everywhere — if the commands below do nothing,
+update your client before assuming something is broken. Claude Code is the
+exception: its plugin format is its own and predates the standard.
 
 ### Claude Code
 
@@ -108,8 +104,14 @@ point it at this repository.
 ### Any other Agent Plugins client
 
 Clone the repository and point the client at the directory. The
-[compatible clients list](https://agent-plugins.org/compatible-clients) is the
-current source of truth for what each one supports.
+[compatible clients list](https://agent-plugins.org/compatible-clients) says
+which clients implement the standard and which components each of them loads.
+
+### Not there, or not installing anything
+
+Configure the components yourself:
+**[Setting it up without the plugin](docs/manual-setup.md)**. Same server, and
+you can switch to the plugin later.
 
 ## Keeping the plugin updated
 
