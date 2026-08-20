@@ -201,7 +201,9 @@ When querying the OpenVidu documentation MCP, always pass version="3.9.0",
 and read the answers for that edition and product.
 ```
 
-Facts only: never put credentials in that file.
+Look before you write it, though: a coding agent asked to work the three out
+will often have added them already. And facts only — never put credentials in
+that file.
 
 ## The documentation server
 
