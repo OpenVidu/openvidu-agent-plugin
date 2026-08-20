@@ -114,16 +114,10 @@ what to re-do.
 How you get a new plugin version depends entirely on the client, and on
 *how* you added it:
 
-- **Claude Code.** Installed from Anthropic's community marketplace: updates
-  in the background after each session starts (up to a 10-minute random
-  delay), because Anthropic-maintained marketplaces auto-update by default.
-  Installed straight from `OpenVidu/openvidu-agent-plugin`: that's a
-  third-party marketplace as far as Claude Code is concerned, so
-  auto-update is **off by default** — turn it on yourself (`/plugin` →
-  **Marketplaces** → select `openvidu` → **Enable auto-update**), or update
-  on demand with `/plugin marketplace update openvidu`. Either way, a
-  detected update needs `/reload-plugins` to take effect in a running
-  session, or your next launch.
+- **Claude Code.** Updates in the background after each session starts (up to
+  a 10-minute random delay), because Anthropic-maintained marketplaces
+  auto-update by default. A detected update needs `/reload-plugins` to take
+  effect in a running session, or your next launch.
 - **VS Code.** Run **Extensions: Check for Extension Updates** from the
   Command Palette, or let it happen automatically every 24 hours if
   `extensions.autoUpdate` is enabled — the same setting that governs regular
