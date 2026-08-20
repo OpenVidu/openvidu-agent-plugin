@@ -4,9 +4,10 @@
 plugin is [`../README.md`](../README.md).*
 
 The repository **is** the plugin: an [Agent Plugins 1.0](https://agent-plugins.org)
-package that wraps the OpenVidu documentation MCP server
-(`https://docs-mcp.openvidu.io/mcp`) so users install it in one action instead
-of pasting a URL into a config file.
+package that bundles the OpenVidu documentation MCP server
+(`https://docs-mcp.openvidu.io/mcp`) with the skills that teach an agent how to
+use it, so users get both in one install instead of pasting a URL into a config
+file and copying skill directories by hand.
 
 The root of the repository is the root of the package, and that is not
 cosmetic: every client installs an Agent Plugin from a location whose root is
