@@ -101,8 +101,7 @@ changes), minor for a new skill or tool, patch for wording.
 
 ## Publishing
 
-There is nothing to mirror: a push to this repository *is* the publish. The
-release procedure is therefore
+A push to this repository *is* the publish. The release procedure is therefore
 
 1. Edit `plugin.json`, `mcp.json`, `skills/` or `README.md`.
 2. Bump `version` in `plugin.json`.
