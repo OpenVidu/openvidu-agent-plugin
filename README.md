@@ -184,8 +184,8 @@ everything downstream is aimed at the same target.
 
 Ask your coding agent to work it out and it will.
 
-**Do not read the version off your dependencies**, and don't let your
-assistant do it either. `livekit-client`, `livekit-server-sdk` and the web
+**Do not read the version off your dependencies**, and don't let your coding
+agent do it either. `livekit-client`, `livekit-server-sdk` and the web
 components are *client* SDKs; their version numbers have no relationship with
 the OpenVidu server's, and they say nothing about CE vs PRO. The server's tool
 descriptions tell the model this explicitly, but it is worth knowing yourself.
@@ -231,7 +231,7 @@ Transport: **Streamable HTTP**. No API key, no login required.
 | `get_changelog` | The release notes for a version, without having to find the page first. Takes an optional product (*meet*, *platform*) |
 | `get_pricing_info` | The pricing page: editions, plans, and the cost model. The same for every version |
 
-You don't call these yourself — your assistant does, when the conversation
+You don't call these yourself — your coding agent does, when the conversation
 needs them.
 
 ### How the server handles the version
@@ -345,7 +345,7 @@ For the same reason a browser-based client won't work — there is no CORS
 preflight.
 
 **The answers are for the wrong version.** Pass `version` explicitly, or pin
-it in `AGENTS.md`/`CLAUDE.md` as shown above. Ask the assistant to run
+it in `AGENTS.md`/`CLAUDE.md` as shown above. Ask your coding agent to run
 `list_versions` to see what is indexed.
 
 **A page you know exists isn't found.** The index covers what the OpenVidu
