@@ -13,18 +13,19 @@ pointing here, for the same reason the package ships portable `plugin.json` +
 
 Four invariants that are load-bearing. Everything else is in `dev/README.md`.
 
-- **Never hand-edit `.claude-plugin/plugin.json`, `.claude-plugin/marketplace.json`
-  or `.mcp.json`.** They are generated from `plugin.json` and `mcp.json` by
-  `python dev/build_plugin.py`, because Claude Code does not implement Agent
-  Plugins (different manifest path, and it spells the transport `http`, not
-  `streamable-http`). `build_plugin.py --check` runs in the test suite and
-  will fail on a hand edit.
+- **Never hand-edit `.claude-plugin/plugin.json`,
+  `.claude-plugin/marketplace.json` or `.mcp.json`.** They are generated from
+  `plugin.json` and `mcp.json` by `python build_plugin.py`, run from `dev/`,
+  because Claude Code does not implement Agent Plugins (different manifest
+  path, and it spells the transport `http`, not `streamable-http`).
+  `build_plugin.py --check` runs in the test suite and will fail on a hand
+  edit.
 - **Bump `version` in `plugin.json` for any change to the package.** Clients
   use it to decide whether an update exists, so a change published without a
   bump reaches nobody.
 - **Keep the root clean.** Package files at the root, tooling and development
-  docs under `dev/` (`pytest.ini` is the documented exception). A new skill
-  goes in `skills/<name>/`, not under `dev/`.
+  docs under `dev/` — and run the tooling from there, or `pytest` finds no
+  configuration. A new skill goes in `skills/<name>/`, not under `dev/`.
 - **The endpoint in `mcp.json` is owned elsewhere.** It points at the
   deployment maintained in
   [`OpenVidu/openvidu-docs-mcp`](https://github.com/OpenVidu/openvidu-docs-mcp);
@@ -32,7 +33,8 @@ Four invariants that are load-bearing. Everything else is in `dev/README.md`.
   until republished.
 
 ```bash
-pip install -r dev/requirements.txt
-python dev/build_plugin.py    # validate + regenerate
+cd dev
+pip install -r requirements.txt
+python build_plugin.py    # validate + regenerate
 pytest
 ```

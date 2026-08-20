@@ -345,7 +345,8 @@ Everything about building, validating and publishing the package lives in
 version numbers work, how to add a skill, and the checklist before a release.
 
 ```bash
-pip install -r dev/requirements.txt
-python dev/build_plugin.py    # validate the package + regenerate the Claude Code files
+cd dev
+pip install -r requirements.txt
+python build_plugin.py    # validate the package + regenerate the Claude Code files
 pytest
 ```

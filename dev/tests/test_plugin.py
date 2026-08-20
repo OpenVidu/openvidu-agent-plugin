@@ -94,7 +94,7 @@ def test_no_stray_component_locations():
 
 def test_generated_files_are_up_to_date():
     """Claude Code does not read the portable files, so these are generated.
-    If this fails, run: python dev/build_plugin.py"""
+    If this fails, run from dev/: python build_plugin.py"""
     bp.build(check_only=True)
 
 

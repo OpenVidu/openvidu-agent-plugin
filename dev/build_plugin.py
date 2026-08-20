@@ -20,9 +20,9 @@ belong under a reverse-domain directory (`com.anthropic.claude-code/`). Claude
 Code only looks at the root, so the generated files sit at the root. No
 Agent Plugins client rejects extra files, and the portable trio is untouched.
 
-Usage:
-    python dev/build_plugin.py            # validate and regenerate
-    python dev/build_plugin.py --check    # fail if anything is stale
+Usage, from the dev/ directory:
+    python build_plugin.py            # validate and regenerate
+    python build_plugin.py --check    # fail if anything is stale
 """
 
 import argparse
@@ -261,7 +261,7 @@ def build(check_only: bool = False) -> list[Path]:
         names = ", ".join(p.relative_to(REPO_ROOT).as_posix() for p in stale)
         raise PluginError(
             f"generated files are out of date ({names}). "
-            "Run: python dev/build_plugin.py"
+            "Run, from dev/: python build_plugin.py"
         )
 
     print(f"Plugin '{manifest['name']}' v{manifest.get('version', '?')} "

@@ -41,25 +41,27 @@ docs/manual-setup.md             ← the same components, configured by hand
 .mcp.json                        ┘
 AGENTS.md                        ← the invariants, for a coding agent
 CLAUDE.md                        ← three lines, pointing at AGENTS.md
-pytest.ini                       ← the one piece of tooling that must be here
 dev/README.md                    ← this file
 dev/build_plugin.py              validate + generate
 dev/schemas/                     vendored Agent Plugins 1.0.0 schemas
 dev/tests/test_plugin.py         the only feedback loop before publishing
 dev/marketplace-submission.md    one-off: getting listed by Anthropic
 dev/requirements.txt             pytest + jsonschema, nothing shipped
+dev/pytest.ini                   testpaths + the import path for the tests
 ```
 
-`pytest.ini` is the exception to "tooling lives in `dev/`", and deliberately:
-pytest looks for its configuration from the arguments' common ancestor
-upwards, so a `dev/pytest.ini` would be invisible to a bare `pytest` from the
-root. Five lines at the root beat a test command that only works from one
-directory.
+**Run every command in this document from `dev/`.** Nothing in the tooling
+looks at the working directory — `build_plugin.py` resolves the package from
+its own location — but `pytest` does: it finds `pytest.ini` by walking up from
+its arguments, so from the repository root there is no configuration and the
+tests fail to import `build_plugin`. One directory to be in, and the whole
+toolchain works.
 
 ```bash
-pip install -r dev/requirements.txt
-python dev/build_plugin.py           # validate + regenerate
-python dev/build_plugin.py --check   # fail if stale (the test suite runs this)
+cd dev
+pip install -r requirements.txt
+python build_plugin.py           # validate + regenerate
+python build_plugin.py --check   # fail if stale (the test suite runs this)
 pytest
 ```
 
@@ -104,7 +106,7 @@ release procedure is therefore
 
 1. Edit `plugin.json`, `mcp.json`, `skills/` or `README.md`.
 2. Bump `version` in `plugin.json`.
-3. `python dev/build_plugin.py` to regenerate the Claude Code files.
+3. `python build_plugin.py` to regenerate the Claude Code files.
 4. `pytest` — a package is only ever exercised by someone else's client, so
    the suite is the last check before it reaches one.
 5. Commit and push.
@@ -123,8 +125,8 @@ package actually ships.
 - [ ] Decide the license. `plugin.json` deliberately has no `license` field;
       add it, plus a `LICENSE` file, once that is settled.
 - [ ] Bump `version` to `1.0.0`.
-- [ ] `claude plugin validate .` passes (needs the Claude Code CLI, so it is
-      not part of `pytest`).
+- [ ] `claude plugin validate ..` passes — the package is the parent
+      directory (needs the Claude Code CLI, so it is not part of `pytest`).
 - [ ] The marketplace listing, if you want one:
       [`marketplace-submission.md`](marketplace-submission.md).
 - [ ] Install it from this repository in at least Claude Code and one Agent
