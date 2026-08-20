@@ -15,10 +15,9 @@ It is both an [Agent Plugins 1.0](https://agent-plugins.org) package and a
 [Claude Code plugin](https://code.claude.com/docs/en/plugins). What you get is
 two kinds of component, and they are worth telling apart:
 
-- **an MCP server** — `openvidu-docs`, hosted at
-  `https://docs-mcp.openvidu.io/mcp`. This is where the documentation comes
-  from: the agent searches it and reads pages out of it, for the version you
-  are actually running. See [The documentation server](#the-documentation-server).
+- **an MCP server** — where the documentation comes from: the agent searches
+  it and reads pages out of it, for the version you are actually running. See
+  [The documentation server](#the-documentation-server).
 - **skills** — procedures the agent loads when a task calls for one, so it
   works the way an OpenVidu project needs instead of improvising. See
   [The skills](#the-skills).
