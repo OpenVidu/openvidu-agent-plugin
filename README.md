@@ -11,49 +11,33 @@ whatever it memorised during training, it searches and reads the real pages,
 **for the OpenVidu deployment you are actually running**: the right version,
 read for the right edition and the right product.
 
-It is an [Agent Plugins 1.0](https://agent-plugins.org) package containing:
+It is an [Agent Plugins 1.0](https://agent-plugins.org) package with two kinds
+of component, and they are worth telling apart:
 
-- **an MCP server** (`openvidu-docs`, hosted at `https://docs-mcp.openvidu.io/mcp`)
-  with seven tools: search the docs, read a page, list the table of contents,
-  list indexed versions, find out which OpenVidu deployment the project talks
-  to, read a version's release notes, and read the pricing page;
-- **a skill** (`openvidu-version-edition-product`) that teaches the agent to
-  establish three things before answering — the OpenVidu **version**, the
-  **edition** (CE or PRO) and the **product** (OpenVidu Platform or OpenVidu
-  Meet) your project uses — and to write them down in your `AGENTS.md` /
-  `CLAUDE.md` so it only has to do it once.
+- **an MCP server** — `openvidu-docs`, hosted at
+  `https://docs-mcp.openvidu.io/mcp`. This is where the documentation comes
+  from: the agent searches it and reads pages out of it, for the version you
+  are actually running. See [The documentation server](#the-documentation-server).
+- **skills** — procedures the agent loads when a task calls for one, so it
+  works the way an OpenVidu project needs instead of improvising. See
+  [The skills](#the-skills).
 
 No account, no API key, nothing to run locally: the documentation server is
 public and read-only.
 
-## Server URL
-
-```
-https://docs-mcp.openvidu.io/mcp
-```
-
-Transport: **Streamable HTTP**. No API key, no login required.
-
 ## Installation
 
-Two routes, and your tool decides which is available:
+Install the plugin and everything inside it arrives configured, however many
+components it grows to hold. You need a client that implements
+[Agent Plugins 1.0](https://agent-plugins.org); find yours below.
 
-- **[Option A](#option-a--install-the-plugin): the plugin.** One install
-  action, and it brings the `openvidu-version-edition-product` skill along
-  with the MCP server. Available in tools that implement
-  [Agent Plugins 1.0](https://agent-plugins.org).
-- **[Option B](#option-b--add-the-server-url-by-hand): by hand.** Works
-  everywhere, including tools that haven't adopted the standard yet. Two
-  steps instead of one — [the server](#option-b--add-the-server-url-by-hand)
-  and then [the skill](#adding-the-skill-by-hand) — and neither updates
-  itself afterwards.
+If your client isn't there yet, or you'd rather not install anything, the same
+components can be configured by hand, separately. That is a longer story, so it
+has its own page: **[Setting it up without the plugin](docs/manual-setup.md)**.
+Both routes end up talking to the same server, and you can move between them
+later.
 
-Both end up talking to the same server, and you can move from one to the
-other later.
-
-### Option A — install the plugin
-
-#### Claude Code
+### Claude Code
 
 ```
 /plugin marketplace add OpenVidu/openvidu-agent-plugin
@@ -78,7 +62,7 @@ marketplaces — official and community alike — auto-update by default, while
 a marketplace added straight from our own repository, as above, does not
 (see [Keeping the plugin updated](#keeping-the-plugin-updated)).
 
-#### VS Code
+### VS Code
 
 Enable plugins once (`"chat.plugins.enabled": true` in settings), then run
 **Chat: Install Plugin From Source** from the Command Palette and paste:
@@ -87,7 +71,7 @@ Enable plugins once (`"chat.plugins.enabled": true` in settings), then run
 https://github.com/OpenVidu/openvidu-agent-plugin
 ```
 
-#### Cursor
+### Cursor
 
 Clone the repository into Cursor's local plugin folder and restart:
 
@@ -100,7 +84,7 @@ Teams can instead import the repository as a marketplace from
 **Dashboard → Plugins → Add Marketplace → Import from Repo**, which makes it
 installable from **Customize** in the sidebar.
 
-#### GitHub Copilot
+### GitHub Copilot
 
 Copilot installs plugins from a repository with `copilot plugin install` (or
 the `/plugin install` slash command), and declaratively through the
@@ -109,187 +93,34 @@ the `/plugin install` slash command), and declaratively through the
 [About plugins](https://docs.github.com/en/copilot/concepts/agents/about-plugins)
 for the exact syntax in your Copilot version.
 
-#### Kiro
+### Kiro
 
 Install from the repository, or find it in **kiro.dev/powers** — Kiro loads
 Agent Plugins packages as powers. See the
 [Kiro powers documentation](https://kiro.dev/docs/powers/).
 
-#### ChatGPT & Codex
+### ChatGPT & Codex
 
 Codex loads Agent Plugins packages; follow
 [the OpenAI plugin documentation](https://developers.openai.com/plugins) and
 point it at this repository.
 
-#### Any other Agent Plugins client
+### Any other Agent Plugins client
 
 Clone the repository and point the client at the directory. The
 [compatible clients list](https://agent-plugins.org/compatible-clients) is the
 current source of truth for what each one supports.
 
-### Option B — add the server URL by hand
-
-Nothing here needs the plugin: it is the same server, configured directly.
-Use it for tools that don't support Agent Plugins yet, or when you'd rather
-not install anything. This gets you the tools; the
-`openvidu-version-edition-product` skill is a
-[second, separate step](#adding-the-skill-by-hand).
-
-#### Claude Code
-
-```bash
-claude mcp add --transport http openvidu-docs https://docs-mcp.openvidu.io/mcp
-```
-
-Add `--scope project` to share it with your team through `.mcp.json`, or
-`--scope user` to have it in every project. Check it with `claude mcp list`.
-
-#### Cursor
-
-Add it to `~/.cursor/mcp.json` (global) or `.cursor/mcp.json` (this project):
-
-```json
-{
-  "mcpServers": {
-    "openvidu-docs": {
-      "url": "https://docs-mcp.openvidu.io/mcp"
-    }
-  }
-}
-```
-
-#### VS Code (GitHub Copilot)
-
-Create `.vscode/mcp.json` in the workspace:
-
-```json
-{
-  "servers": {
-    "openvidu-docs": {
-      "type": "http",
-      "url": "https://docs-mcp.openvidu.io/mcp"
-    }
-  }
-}
-```
-
-Or from the command line:
-
-```bash
-code --add-mcp '{"name":"openvidu-docs","type":"http","url":"https://docs-mcp.openvidu.io/mcp"}'
-```
-
-#### Claude Desktop
-
-*Settings → Connectors → Add custom connector*, then paste the server URL.
-
-#### Any other client
-
-Anything that speaks MCP over Streamable HTTP works; it only needs the URL.
-The usual shape of the configuration file is:
-
-```json
-{
-  "mcpServers": {
-    "openvidu-docs": {
-      "type": "http",
-      "url": "https://docs-mcp.openvidu.io/mcp"
-    }
-  }
-}
-```
-
-Check your client's own documentation for where that file lives and whether it
-calls the field `type`, `transport`, or nothing at all.
-
-
-### Adding the skill by hand
-
-Option B gets you the tools. This gets you the skill, and the two belong
-together: the skill's own procedure is to call
-`resolve_openvidu_version_edition_product`, so without the server configured
-it has nothing to call.
-
-The skill is a single file —
-[`skills/openvidu-version-edition-product/SKILL.md`](skills/openvidu-version-edition-product/SKILL.md)
-— in the [Agent Skills](https://agentskills.io) format that most clients now
-read straight off disk. Installing it by hand means copying that file into a
-directory the client scans. **The directory name must be the skill name**
-(`openvidu-version-edition-product`): it has to match the `name` in the file's
-frontmatter, and a mismatch makes the client skip the skill silently.
-
-| Client | For one project | For every project |
-|---|---|---|
-| Claude Code | `.claude/skills/` | `~/.claude/skills/` |
-| Cursor | `.agents/skills/`, `.cursor/skills/` | `~/.agents/skills/`, `~/.cursor/skills/` |
-| VS Code (GitHub Copilot) | `.github/skills/`, `.agents/skills/` | `~/.copilot/skills/`, `~/.agents/skills/` |
-| Codex | — | `~/.codex/skills/` (or `$CODEX_HOME/skills`) |
-| Kiro | `.kiro/skills/` | `~/.kiro/skills/` |
-
-For anything not listed, the
-[client showcase](https://agentskills.io/clients) links each one's own
-documentation, which is where the current paths live.
-
-Two things are worth reading out of that table. Cursor and VS Code also accept
-`.claude/skills/` and `~/.claude/skills/` for backward compatibility, which
-makes **`.claude/skills/` the single project directory that covers Claude Code,
-Cursor and Copilot at once** — the pragmatic choice for a repository shared
-across a team today. And `.agents/skills/` is the vendor-neutral location the
-ecosystem is converging on: Cursor and VS Code read it, Claude Code does not
-yet.
-
-For every project, on Claude Code:
-
-```bash
-mkdir -p ~/.claude/skills/openvidu-version-edition-product
-curl -fsSL -o ~/.claude/skills/openvidu-version-edition-product/SKILL.md \
-  https://raw.githubusercontent.com/OpenVidu/openvidu-agent-plugin/main/skills/openvidu-version-edition-product/SKILL.md
-```
-
-For one project, shared with your team, swap the destination for the
-project-level path from the table and commit the file, so a checkout brings the
-skill with it:
-
-```bash
-mkdir -p .claude/skills/openvidu-version-edition-product
-curl -fsSL -o .claude/skills/openvidu-version-edition-product/SKILL.md \
-  https://raw.githubusercontent.com/OpenVidu/openvidu-agent-plugin/main/skills/openvidu-version-edition-product/SKILL.md
-```
-
-#### Checking it loaded
-
-Claude Code lists it in `/skills`, and picks up a newly added skill without a
-restart — unless you created the top-level skills directory itself mid-session,
-which needs one. In VS Code, type `/` in chat, or run **Chat: Open
-Customizations** from the Command Palette. Elsewhere, the skill's name appears
-wherever your client lists what it has loaded.
-
-#### Clients that take skills through settings, not a directory
-
-Claude Desktop and claude.ai don't read a folder on your disk: skills are
-enabled for your account, from **Customize** in the Desktop app sidebar or the
-skill settings on claude.ai.
-
-#### Clients that don't do skills at all
-
-You lose nothing that can't be written down. The whole point of the skill is to
-establish your deployment's version, edition and product once and record them —
-so do that part yourself, as described in
-[Say it once, in writing](#say-it-once-in-writing), and the assistant reads
-them from your `AGENTS.md` on every future session without needing the skill.
-
 ## Keeping the plugin updated
 
-Only [Option A](#option-a--install-the-plugin) updates itself. What it keeps
-current is the skill and the server address inside the plugin package; the
-server behind that address is versioned per documentation release (see below),
-not per plugin release, so the URL itself never goes stale — which is why
-[Option B](#option-b--add-the-server-url-by-hand) has nothing to refresh.
+An update carries whatever is inside the package — the skills, and the server
+address. The server behind that address is versioned per documentation release
+(see [The documentation server](#the-documentation-server)), not per plugin
+release, so the endpoint itself never goes stale.
 
-A **hand-copied skill is a copy**, though, and nothing tells you when it moves
-on: re-run the `curl` from
-[Adding the skill by hand](#adding-the-skill-by-hand) to refresh it, or switch
-to Option A and let the client manage it.
+A [hand-configured setup](docs/manual-setup.md) behaves differently: copies do
+not update, and nothing tells you when the originals move on. That page says
+what to re-do.
 
 How you get a new plugin version depends entirely on the client, and on
 *how* you added it:
@@ -335,15 +166,30 @@ How you get a new plugin version depends entirely on the client, and on
 ```text
 plugin.json                     Agent Plugins 1.0 manifest
 mcp.json                        the documentation MCP server (Streamable HTTP)
-skills/openvidu-version-edition-product/   the pinning skill
+skills/                         one directory per skill, each with a SKILL.md
 .claude-plugin/plugin.json      Claude Code manifest        ─┐ generated: Claude Code
 .claude-plugin/marketplace.json Claude Code marketplace      │ does not read the
 .mcp.json                       Claude Code MCP config      ─┘ portable files yet
+docs/manual-setup.md            setting the same components up by hand
 dev/                            not part of the plugin: how it is built,
                                 validated and published
 ```
 
-## Available tools
+## The documentation server
+
+Everything under this heading concerns one component: the `openvidu-docs` MCP
+server, which is what carries the documentation. None of it applies to
+[the skills](#the-skills).
+
+### Server URL
+
+```
+https://docs-mcp.openvidu.io/mcp
+```
+
+Transport: **Streamable HTTP**. No API key, no login required.
+
+### Available tools
 
 | Tool | What it does |
 |---|---|
@@ -358,7 +204,7 @@ dev/                            not part of the plugin: how it is built,
 You don't call these yourself — your assistant does, when the conversation
 needs them.
 
-## Your deployment: the part worth reading
+### Your deployment: the part worth reading
 
 An OpenVidu answer is only right for one deployment, and **a remote server
 cannot see your project**, so three things have to reach it from your side:
@@ -384,7 +230,7 @@ The rules the server follows for the version:
 The edition and the product are not in the index at all: they are how your
 assistant should *read* what it finds there.
 
-### Finding them out
+#### Finding them out
 
 Ask your assistant to work it out and it will: the
 `resolve_openvidu_version_edition_product` tool hands it the procedure —
@@ -400,7 +246,7 @@ numbers have no relationship with the OpenVidu server's, and they say nothing
 about CE vs PRO. The server's tool descriptions tell the model this
 explicitly, but it is worth knowing yourself.
 
-### Say it once, in writing
+#### Say it once, in writing
 
 So you don't repeat it in every conversation, put this in your project's
 `AGENTS.md` or `CLAUDE.md`:
@@ -413,7 +259,7 @@ and read the answers for that edition and product.
 
 Facts only: never put credentials in that file.
 
-## Example prompts
+### Example prompts
 
 - "Using the OpenVidu docs MCP, how do I record a room with individual tracks?"
 - "What does OpenVidu documentation say about deploying with fault tolerance?
@@ -426,7 +272,7 @@ Facts only: never put credentials in that file.
   the docs server carrying it?"
 - "List the sections of the OpenVidu documentation so I can see what's there."
 
-## Checking it works
+### Checking it works
 
 With Claude Code:
 
@@ -447,22 +293,56 @@ curl -s -X POST https://docs-mcp.openvidu.io/mcp \
 
 You should get a JSON-RPC response listing the seven tools.
 
+### Good to know
+
+- **Everything is precomputed.** The documentation ships inside the server, so
+  a query does no crawling and no external calls: answers come back in
+  milliseconds.
+- **Your query text is logged, your IP is not.** Each call is recorded —
+  tool, the search text or page you asked for, and outcome — to measure usage
+  and see what people can't find. The source IP is used once, to resolve a
+  country and a random session id, and then discarded: it never reaches
+  long-term storage.
+- **Scope.** Only the OpenVidu documentation: no code search across
+  repositories, no changelogs, no issue tracking. It reads, it never writes.
+
+## The skills
+
+A skill is instructions rather than tools: a directory with a `SKILL.md` that
+the agent loads when its description matches what you asked. They live in
+[`skills/`](skills/) in this repository, in the
+[Agent Skills](https://agentskills.io) format, and the plugin installs whatever
+is there — so the list below can grow without anything about installing it
+changing.
+
+| Skill | What it does |
+|---|---|
+| `openvidu-version-edition-product` | Establishes the three facts every OpenVidu answer depends on — version, edition and product — and writes them into your `AGENTS.md` / `CLAUDE.md`, so they are settled once instead of every session. The reasoning is in [Your deployment](#your-deployment-the-part-worth-reading) |
+
+Skills are advisory: the agent decides when one is relevant, from its
+description alone, and only then reads the rest. Some clients also let you
+invoke one by name as a command. A skill may use the MCP server or ignore it —
+the one above leans on it, because working out which deployment a project talks
+to is something the server knows how to explain.
+
 ## Troubleshooting
 
 **The plugin installed but no OpenVidu tools appear.** Not every client that
 loads Agent Plugins loads every component: check that yours supports MCP
 servers in plugins on the
 [compatible clients list](https://agent-plugins.org/compatible-clients). If it
-only loads skills, use [Option B](#option-b--add-the-server-url-by-hand) for
-the tools.
+only loads skills, add the server by hand instead:
+[Setting it up without the plugin](docs/manual-setup.md#the-mcp-server).
 
-**The skill never activates.** Three usual causes, in order of likelihood:
-the directory name doesn't match the `name` in the frontmatter (both must be
-`openvidu-version-edition-product`); the directory isn't one your client
-actually scans — check it against the table in
-[Adding the skill by hand](#adding-the-skill-by-hand); or the skill loaded fine
-but had nothing to do, because the version, edition and product were already
-pinned in your `AGENTS.md`, which is the skill working as intended.
+**A skill never activates.** If you installed the plugin, check the same
+[compatible clients list](https://agent-plugins.org/compatible-clients) for
+whether your client loads skills from plugins — several load MCP servers and
+not skills. If you copied it in by hand, the two things that go wrong are the
+directory name, which must equal the `name` in that skill's frontmatter or
+clients skip it in silence, and the location; both are covered in
+[Setting it up without the plugin](docs/manual-setup.md#the-skills). It is also
+possible the skill loaded and had nothing to do — one whose work is already
+done stays quiet, which is not a fault.
 
 **The client shows the server as failed or offline.** Check the transport is
 HTTP, not `sse` or `stdio`; this server is Streamable HTTP only. And the URL
@@ -481,25 +361,12 @@ it in `AGENTS.md`/`CLAUDE.md` as shown above. Ask the assistant to run
 `llms.txt` lists, and it is rebuilt when the documentation changes, not
 continuously — a page published minutes ago may not be there yet.
 
-## Good to know
-
-- **Everything is precomputed.** The documentation ships inside the server, so
-  a query does no crawling and no external calls: answers come back in
-  milliseconds.
-- **Your query text is logged, your IP is not.** Each call is recorded —
-  tool, the search text or page you asked for, and outcome — to measure usage
-  and see what people can't find. The source IP is used once, to resolve a
-  country and a random session id, and then discarded: it never reaches
-  long-term storage.
-- **Scope.** Only the OpenVidu documentation: no code search across
-  repositories, no changelogs, no issue tracking. It reads, it never writes.
-
 ## Source
 
 This repository is what gets installed: the plugin manifest, the MCP server
-configuration, and the `openvidu-version-edition-product` skill.
-Report issues with any of those here. The documentation server behind the
-MCP endpoint is maintained separately by the OpenVidu team.
+configuration, and the skills. Report issues with any of those here. The
+documentation server behind the MCP endpoint is maintained separately by the
+OpenVidu team.
 
 ## Development
 
