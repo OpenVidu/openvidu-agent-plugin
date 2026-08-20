@@ -153,6 +153,7 @@ skills/                         one directory per skill, each with a SKILL.md
 .claude-plugin/plugin.json      Claude Code manifest
 .claude-plugin/marketplace.json Claude Code marketplace
 .mcp.json                       Claude Code MCP config
+LICENSE                         Apache 2.0
 docs/manual-setup.md            setting the same components up by hand
 dev/                            not part of the plugin: how it is built,
                                 validated and published

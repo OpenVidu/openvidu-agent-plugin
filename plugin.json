@@ -9,5 +9,6 @@
   },
   "homepage": "https://docs-mcp.openvidu.io",
   "repository": "https://github.com/OpenVidu/openvidu-agent-plugin",
+  "license": "Apache-2.0",
   "keywords": ["openvidu", "webrtc", "livekit", "documentation", "mcp"]
 }
