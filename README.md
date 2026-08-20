@@ -25,9 +25,6 @@ component, and they are worth telling apart:
   works the way an OpenVidu project needs instead of improvising. See
   [The skills](#the-skills).
 
-No account, no API key, nothing to run locally: the documentation server is
-public and read-only.
-
 ## Installation
 
 Install the plugin and everything inside it arrives configured, however many
