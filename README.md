@@ -33,27 +33,17 @@ exception: its plugin format is its own and predates the standard.
 ### Claude Code
 
 ```
-/plugin marketplace add OpenVidu/openvidu-agent-plugin
-/plugin install openvidu@openvidu
-```
-
-The two commands above are all you need: the package carries Claude Code's
-own plugin files alongside the portable ones.
-
-If the plugin is listed in Anthropic's community marketplace (check with
-`/plugin` → **Discover**, or search
-[the catalog](https://github.com/anthropics/claude-plugins-community/blob/main/.claude-plugin/marketplace.json)),
-install it from there instead:
-
-```
 /plugin marketplace add anthropics/claude-plugins-community
 /plugin install openvidu@claude-community
 ```
 
-The difference isn't just where it comes from: Anthropic-maintained
-marketplaces — official and community alike — auto-update by default, while
-a marketplace added straight from our own repository, as above, does not
-(see [Keeping the plugin updated](#keeping-the-plugin-updated)).
+Anthropic-maintained marketplaces auto-update by default, so that is the route
+to prefer — see [Keeping the plugin updated](#keeping-the-plugin-updated).
+If it isn't in
+[the catalog](https://github.com/anthropics/claude-plugins-community/blob/main/.claude-plugin/marketplace.json)
+yet, `/plugin marketplace add OpenVidu/openvidu-agent-plugin` and then
+`/plugin install openvidu@openvidu` installs it straight from this repository,
+without the auto-updates.
 
 ### VS Code
 
