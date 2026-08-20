@@ -182,14 +182,7 @@ everything downstream is aimed at the same target.
 
 ### Finding them out
 
-Ask your assistant to work it out and it will: the
-`resolve_openvidu_version_edition_product` tool hands it the procedure —
-which product your code is using, where your deployment's URL and credentials
-live, and the endpoint that reports version and edition. It follows a few
-rules while doing so: it never prints your credentials, and it asks before
-sending a request to anything other than `localhost`. A skill can make it do
-this without being asked, and record the answer — see
-[The skills](#the-skills).
+Ask your coding agent to work it out and it will.
 
 **Do not read the version off your dependencies**, and don't let your
 assistant do it either. `livekit-client`, `livekit-server-sdk` and the web
