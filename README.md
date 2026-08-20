@@ -284,19 +284,6 @@ curl -s -X POST https://docs-mcp.openvidu.io/mcp \
 
 You should get a JSON-RPC response listing the seven tools.
 
-### Good to know
-
-- **Everything is precomputed.** The documentation ships inside the server, so
-  a query does no crawling and no external calls: answers come back in
-  milliseconds.
-- **Your query text is logged, your IP is not.** Each call is recorded —
-  tool, the search text or page you asked for, and outcome — to measure usage
-  and see what people can't find. The source IP is used once, to resolve a
-  country and a random session id, and then discarded: it never reaches
-  long-term storage.
-- **Scope.** Only the OpenVidu documentation: no code search across
-  repositories, no changelogs, no issue tracking. It reads, it never writes.
-
 ## The skills
 
 A skill is instructions rather than tools: a directory with a `SKILL.md` that
