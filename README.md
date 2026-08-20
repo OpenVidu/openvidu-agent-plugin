@@ -97,8 +97,8 @@ which clients implement the standard and which components each of them loads.
 ### Not there, or not installing anything
 
 Configure the components yourself:
-**[Setting it up without the plugin](docs/manual-setup.md)**. Same server, and
-you can switch to the plugin later.
+**[Setting it up without the plugin](docs/manual-setup.md)** — the same server
+and skills, set up by hand. You can move to the plugin later.
 
 ## Keeping the plugin updated
 
