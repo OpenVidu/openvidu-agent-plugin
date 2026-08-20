@@ -289,9 +289,7 @@ You should get a JSON-RPC response listing the seven tools.
 A skill is instructions rather than tools: a directory with a `SKILL.md` that
 the agent loads when its description matches what you asked. They live in
 [`skills/`](skills/) in this repository, in the
-[Agent Skills](https://agentskills.io) format, and the plugin installs whatever
-is there — so the list below can grow without anything about installing it
-changing.
+[Agent Skills](https://agentskills.io) format.
 
 | Skill | What it does |
 |---|---|
