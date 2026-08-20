@@ -1,0 +1,18 @@
+{
+  "name": "openvidu",
+  "description": "The official OpenVidu documentation for coding agents, matched to the version, edition and product of the deployment they are working against.",
+  "version": "0.3.0",
+  "author": {
+    "name": "OpenVidu",
+    "url": "https://openvidu.io"
+  },
+  "homepage": "https://docs-mcp.openvidu.io",
+  "repository": "https://github.com/OpenVidu/openvidu-agent-plugin",
+  "keywords": [
+    "openvidu",
+    "webrtc",
+    "livekit",
+    "documentation",
+    "mcp"
+  ]
+}

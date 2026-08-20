@@ -1,0 +1,407 @@
+# OpenVidu Agent Plugin
+
+[OpenVidu](https://openvidu.io) is an open-source, self-hosted platform for
+building real-time video conferencing and WebRTC applications, built on top
+of [LiveKit](https://livekit.io) and mediasoup. It's developed by a team with
+over a decade building WebRTC systems — see [About Us](https://openvidu.io/about-us/).
+
+This plugin gives your coding agent direct access to the official OpenVidu
+documentation (<https://openvidu.io/latest/docs/>) — instead of guessing from
+whatever it memorised during training, it searches and reads the real pages,
+**for the OpenVidu deployment you are actually running**: the right version,
+read for the right edition and the right product.
+
+It is an [Agent Plugins 1.0](https://agent-plugins.org) package containing:
+
+- **an MCP server** (`openvidu-docs`, hosted at `https://docs-mcp.openvidu.io/mcp`)
+  with seven tools: search the docs, read a page, list the table of contents,
+  list indexed versions, find out which OpenVidu deployment the project talks
+  to, read a version's release notes, and read the pricing page;
+- **a skill** (`openvidu-version-edition-product`) that teaches the agent to
+  establish three things before answering — the OpenVidu **version**, the
+  **edition** (CE or PRO) and the **product** (OpenVidu Platform or OpenVidu
+  Meet) your project uses — and to write them down in your `AGENTS.md` /
+  `CLAUDE.md` so it only has to do it once.
+
+No account, no API key, nothing to run locally: the documentation server is
+public and read-only.
+
+## Server URL
+
+```
+https://docs-mcp.openvidu.io/mcp
+```
+
+Transport: **Streamable HTTP**. No API key, no login required.
+
+## Installation
+
+Two routes, and your tool decides which is available:
+
+- **[Option A](#option-a--install-the-plugin): the plugin.** One install
+  action, and it brings the `openvidu-version-edition-product` skill along
+  with the MCP server. Available in tools that implement
+  [Agent Plugins 1.0](https://agent-plugins.org).
+- **[Option B](#option-b--add-the-server-url-by-hand): the server URL by
+  hand.** Works everywhere, including tools that haven't adopted the standard
+  yet. You get the tools, not the skill.
+
+Both end up talking to the same server, and you can move from one to the
+other later.
+
+### Option A — install the plugin
+
+#### Claude Code
+
+```
+/plugin marketplace add OpenVidu/openvidu-agent-plugin
+/plugin install openvidu@openvidu
+```
+
+Claude Code has its own plugin format rather than Agent Plugins, so the
+package ships both; the commands above are all you need.
+
+If the plugin is listed in Anthropic's community marketplace (check with
+`/plugin` → **Discover**, or search
+[the catalog](https://github.com/anthropics/claude-plugins-community/blob/main/.claude-plugin/marketplace.json)),
+install it from there instead:
+
+```
+/plugin marketplace add anthropics/claude-plugins-community
+/plugin install openvidu@claude-community
+```
+
+The difference isn't just where it comes from: Anthropic-maintained
+marketplaces — official and community alike — auto-update by default, while
+a marketplace added straight from our own repository, as above, does not
+(see [Keeping the plugin updated](#keeping-the-plugin-updated)).
+
+#### VS Code
+
+Enable plugins once (`"chat.plugins.enabled": true` in settings), then run
+**Chat: Install Plugin From Source** from the Command Palette and paste:
+
+```
+https://github.com/OpenVidu/openvidu-agent-plugin
+```
+
+#### Cursor
+
+Clone the repository into Cursor's local plugin folder and restart:
+
+```bash
+git clone https://github.com/OpenVidu/openvidu-agent-plugin \
+  ~/.cursor/plugins/local/openvidu
+```
+
+Teams can instead import the repository as a marketplace from
+**Dashboard → Plugins → Add Marketplace → Import from Repo**, which makes it
+installable from **Customize** in the sidebar.
+
+#### GitHub Copilot
+
+Copilot installs plugins from a repository with `copilot plugin install` (or
+the `/plugin install` slash command), and declaratively through the
+`enabledPlugins` field of `~/.copilot/settings.json` or
+`.github/copilot/settings.json`. See
+[About plugins](https://docs.github.com/en/copilot/concepts/agents/about-plugins)
+for the exact syntax in your Copilot version.
+
+#### Kiro
+
+Install from the repository, or find it in **kiro.dev/powers** — Kiro loads
+Agent Plugins packages as powers. See the
+[Kiro powers documentation](https://kiro.dev/docs/powers/).
+
+#### ChatGPT & Codex
+
+Codex loads Agent Plugins packages; follow
+[the OpenAI plugin documentation](https://developers.openai.com/plugins) and
+point it at this repository.
+
+#### Any other Agent Plugins client
+
+Clone the repository and point the client at the directory. The
+[compatible clients list](https://agent-plugins.org/compatible-clients) is the
+current source of truth for what each one supports.
+
+### Option B — add the server URL by hand
+
+Nothing here needs the plugin: it is the same server, configured directly.
+Use it for tools that don't support Agent Plugins yet, or when you'd rather
+not install anything. You get the tools, but not the
+`openvidu-version-edition-product` skill.
+
+#### Claude Code
+
+```bash
+claude mcp add --transport http openvidu-docs https://docs-mcp.openvidu.io/mcp
+```
+
+Add `--scope project` to share it with your team through `.mcp.json`, or
+`--scope user` to have it in every project. Check it with `claude mcp list`.
+
+#### Cursor
+
+Add it to `~/.cursor/mcp.json` (global) or `.cursor/mcp.json` (this project):
+
+```json
+{
+  "mcpServers": {
+    "openvidu-docs": {
+      "url": "https://docs-mcp.openvidu.io/mcp"
+    }
+  }
+}
+```
+
+#### VS Code (GitHub Copilot)
+
+Create `.vscode/mcp.json` in the workspace:
+
+```json
+{
+  "servers": {
+    "openvidu-docs": {
+      "type": "http",
+      "url": "https://docs-mcp.openvidu.io/mcp"
+    }
+  }
+}
+```
+
+Or from the command line:
+
+```bash
+code --add-mcp '{"name":"openvidu-docs","type":"http","url":"https://docs-mcp.openvidu.io/mcp"}'
+```
+
+#### Claude Desktop
+
+*Settings → Connectors → Add custom connector*, then paste the server URL.
+
+#### Any other client
+
+Anything that speaks MCP over Streamable HTTP works; it only needs the URL.
+The usual shape of the configuration file is:
+
+```json
+{
+  "mcpServers": {
+    "openvidu-docs": {
+      "type": "http",
+      "url": "https://docs-mcp.openvidu.io/mcp"
+    }
+  }
+}
+```
+
+Check your client's own documentation for where that file lives and whether it
+calls the field `type`, `transport`, or nothing at all.
+
+## Keeping the plugin updated
+
+Only [Option A](#option-a--install-the-plugin) has anything to update — the
+skill and the server address inside the plugin package. [Option B](#option-b--add-the-server-url-by-hand)
+is just a URL: the server behind it is versioned per documentation release
+(see below), not per plugin release, so there's nothing to refresh there.
+
+How you get a new plugin version depends entirely on the client, and on
+*how* you added it:
+
+- **Claude Code.** Installed from Anthropic's community marketplace: updates
+  in the background after each session starts (up to a 10-minute random
+  delay), because Anthropic-maintained marketplaces auto-update by default.
+  Installed straight from `OpenVidu/openvidu-agent-plugin`: that's a
+  third-party marketplace as far as Claude Code is concerned, so
+  auto-update is **off by default** — turn it on yourself (`/plugin` →
+  **Marketplaces** → select `openvidu` → **Enable auto-update**), or update
+  on demand with `/plugin marketplace update openvidu`. Either way, a
+  detected update needs `/reload-plugins` to take effect in a running
+  session, or your next launch.
+- **VS Code.** Run **Extensions: Check for Extension Updates** from the
+  Command Palette, or let it happen automatically every 24 hours if
+  `extensions.autoUpdate` is enabled — the same setting that governs regular
+  extension updates, not something specific to this plugin.
+- **Cursor.** A plugin cloned manually into
+  `~/.cursor/plugins/local/openvidu` is never updated for you: `git pull`
+  the clone yourself and restart Cursor. A plugin installed from a team
+  marketplace updates on its own only if an admin turned on **Enable Auto
+  Refresh** for that marketplace (push-based, so it lands within about 10
+  minutes of a new commit); otherwise someone has to click **Refresh** in
+  the marketplace dashboard.
+- **GitHub Copilot.** `copilot plugin update openvidu` (or `--all` for
+  everything installed). Automatic updates at the start of each session are
+  a first-party-plugin behavior; for a plugin from a marketplace like ours,
+  they only happen if that marketplace's own configuration sets
+  `autoUpdate: true` — otherwise it's the manual command above, or
+  `copilot plugin marketplace update` to refresh the catalog first.
+- **Kiro.** Manual only: open the **Powers** panel, select the plugin, and
+  run **Check for updates** → **Install updates**. Kiro doesn't poll for
+  updates on its own.
+- **ChatGPT & Codex.** `codex plugin marketplace upgrade` (or with a
+  marketplace name, to target just this one).
+- **Any other Agent Plugins client.** Pull the repository again and reload
+  the client; whether it does this for you is client-specific — check the
+  [compatible clients list](https://agent-plugins.org/compatible-clients).
+
+## What's in the package
+
+```text
+plugin.json                     Agent Plugins 1.0 manifest
+mcp.json                        the documentation MCP server (Streamable HTTP)
+skills/openvidu-version-edition-product/   the pinning skill
+.claude-plugin/plugin.json      Claude Code manifest        ─┐ generated: Claude Code
+.claude-plugin/marketplace.json Claude Code marketplace      │ does not read the
+.mcp.json                       Claude Code MCP config      ─┘ portable files yet
+```
+
+## Available tools
+
+| Tool | What it does |
+|---|---|
+| `search_docs` | Searches the documentation. Handles word variants (*record* finds *recording*) and OpenVidu vocabulary (*auth* finds *authentication*) |
+| `get_doc_page` | Returns the full content of a page |
+| `list_doc_sections` | The table of contents: which pages exist, grouped by section |
+| `list_versions` | Which documentation versions this server has indexed, and which one it uses by default |
+| `resolve_openvidu_version_edition_product` | How to find out which deployment your project talks to: version, edition (CE/PRO) and product (Platform/Meet). Also maps a LiveKit Server version to OpenVidu version(s) |
+| `get_changelog` | The release notes for a version, without having to find the page first. Takes an optional product (*meet*, *platform*) |
+| `get_pricing_info` | The pricing page: editions, plans, and the cost model. The same for every version |
+
+You don't call these yourself — your assistant does, when the conversation
+needs them.
+
+## Your deployment: the part worth reading
+
+An OpenVidu answer is only right for one deployment, and **a remote server
+cannot see your project**, so three things have to reach it from your side:
+
+- **version** — the documentation differs between releases. It is what the
+  server indexes by.
+- **edition** — CE or PRO; PRO has features CE does not.
+- **product** — OpenVidu Platform (your app uses the LiveKit SDKs) or
+  OpenVidu Meet (its REST API and the `<openvidu-meet>` web component). Two
+  different APIs.
+
+The rules the server follows for the version:
+
+- Every tool takes an optional `version`. Without it, the newest indexed
+  version is used.
+- Ask for a version that isn't indexed and it **fails, listing the ones it
+  has**. It will never quietly answer with a different version — documentation
+  for the wrong release is worse than none.
+- Every answer says which version it used, and flags pages that actually
+  differ between versions (pages identical across all of them say so, so the
+  warning means something when it appears).
+
+The edition and the product are not in the index at all: they are how your
+assistant should *read* what it finds there.
+
+### Finding them out
+
+Ask your assistant to work it out and it will: the
+`resolve_openvidu_version_edition_product` tool hands it the procedure —
+which product your code is using, where your deployment's URL and credentials
+live, and the endpoint that reports version and edition. It follows a few
+rules while doing so: it never prints your credentials, and it asks before
+sending a request to anything other than `localhost`.
+
+**Do not read the version off your dependencies**, and don't let your
+assistant do it either. `livekit-client`, `livekit-server-sdk`,
+`openvidu-browser` and the web components are *client* SDKs; their version
+numbers have no relationship with the OpenVidu server's, and they say nothing
+about CE vs PRO. The server's tool descriptions tell the model this
+explicitly, but it is worth knowing yourself.
+
+### Say it once, in writing
+
+So you don't repeat it in every conversation, put this in your project's
+`AGENTS.md` or `CLAUDE.md`:
+
+```markdown
+This project connects to an OpenVidu 3.9.0 pro deployment, using OpenVidu Meet.
+When querying the OpenVidu documentation MCP, always pass version="3.9.0",
+and read the answers for that edition and product.
+```
+
+Facts only: never put credentials in that file.
+
+## Example prompts
+
+- "Using the OpenVidu docs MCP, how do I record a room with individual tracks?"
+- "What does OpenVidu documentation say about deploying with fault tolerance?
+  We're on 3.8.0."
+- "Check the OpenVidu docs before answering: does the egress service need S3
+  credentials, and how are they configured?"
+- "Work out which OpenVidu version, edition and product this project uses, and
+  write it into CLAUDE.md."
+- "Our LiveKit server reports 1.9.8 — which OpenVidu version is that, and is
+  the docs server carrying it?"
+- "List the sections of the OpenVidu documentation so I can see what's there."
+
+## Checking it works
+
+With Claude Code:
+
+```bash
+claude mcp list          # openvidu-docs should appear as connected
+```
+
+If you installed the plugin, `/plugin` lists it as enabled and its **Errors**
+tab is where a failed MCP connection shows up.
+
+Or straight against the endpoint:
+
+```bash
+curl -s -X POST https://docs-mcp.openvidu.io/mcp \
+  -H 'content-type: application/json' \
+  -d '{"jsonrpc":"2.0","id":1,"method":"tools/list"}'
+```
+
+You should get a JSON-RPC response listing the seven tools.
+
+## Troubleshooting
+
+**The plugin installed but no OpenVidu tools appear.** Not every client that
+loads Agent Plugins loads every component: check that yours supports MCP
+servers in plugins on the
+[compatible clients list](https://agent-plugins.org/compatible-clients). If it
+only loads skills, use [Option B](#option-b--add-the-server-url-by-hand) for
+the tools.
+
+**The client shows the server as failed or offline.** Check the transport is
+HTTP, not `sse` or `stdio`; this server is Streamable HTTP only. And the URL
+ends in `/mcp`.
+
+**Opening the URL in a browser gives an error.** That is expected: the server
+only accepts `POST` and answers `405` to anything else. It is not a web page.
+For the same reason a browser-based client won't work — there is no CORS
+preflight.
+
+**The answers are for the wrong version.** Pass `version` explicitly, or pin
+it in `AGENTS.md`/`CLAUDE.md` as shown above. Ask the assistant to run
+`list_versions` to see what is indexed.
+
+**A page you know exists isn't found.** The index covers what the OpenVidu
+`llms.txt` lists, and it is rebuilt when the documentation changes, not
+continuously — a page published minutes ago may not be there yet.
+
+## Good to know
+
+- **Everything is precomputed.** The documentation ships inside the server, so
+  a query does no crawling and no external calls: answers come back in
+  milliseconds.
+- **Your query text is logged, your IP is not.** Each call is recorded —
+  tool, the search text or page you asked for, and outcome — to measure usage
+  and see what people can't find. The source IP is used once, to resolve a
+  country and a random session id, and then discarded: it never reaches
+  long-term storage.
+- **Scope.** Only the OpenVidu documentation: no code search across
+  repositories, no changelogs, no issue tracking. It reads, it never writes.
+
+## Source
+
+This repository is what gets installed: the plugin manifest, the MCP server
+configuration, and the `openvidu-version-edition-product` skill.
+Report issues with any of those here. The documentation server behind the
+MCP endpoint is maintained separately by the OpenVidu team.

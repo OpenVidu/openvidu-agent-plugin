@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "openvidu-docs": {
+      "type": "http",
+      "url": "https://docs-mcp.openvidu.io/mcp"
+    }
+  }
+}

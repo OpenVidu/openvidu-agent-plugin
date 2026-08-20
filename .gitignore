@@ -1,0 +1,11 @@
+# Python (scripts/ and tests/ are the validation tooling, not shipped code)
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/
+
+# Editor / OS
+.DS_Store
+.idea/
+.vscode/
