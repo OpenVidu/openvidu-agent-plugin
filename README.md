@@ -150,9 +150,9 @@ How you get a new plugin version depends entirely on the client, and on
 plugin.json                     Agent Plugins 1.0 manifest
 mcp.json                        the documentation MCP server (Streamable HTTP)
 skills/                         one directory per skill, each with a SKILL.md
-.claude-plugin/plugin.json      Claude Code manifest        ─┐ generated: Claude Code
-.claude-plugin/marketplace.json Claude Code marketplace      │ does not read the
-.mcp.json                       Claude Code MCP config      ─┘ portable files yet
+.claude-plugin/plugin.json      Claude Code manifest
+.claude-plugin/marketplace.json Claude Code marketplace
+.mcp.json                       Claude Code MCP config
 docs/manual-setup.md            setting the same components up by hand
 dev/                            not part of the plugin: how it is built,
                                 validated and published
