@@ -190,7 +190,7 @@ components are *client* SDKs; their version numbers have no relationship with
 the OpenVidu server's, and they say nothing about CE vs PRO. The server's tool
 descriptions tell the model this explicitly, but it is worth knowing yourself.
 
-### Say it once, in writing
+### Write the version, edition and product in AGENTS.md
 
 So you don't repeat it in every conversation, put this in your project's
 `AGENTS.md` or `CLAUDE.md`:

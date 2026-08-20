@@ -168,9 +168,8 @@ skill settings on claude.ai.
 
 You lose less than it sounds. A skill is only instructions, so you can do by
 hand what it would have done: for the version, edition and product, that means
-writing them down once as described in
-[Say it once, in writing](../README.md#say-it-once-in-writing), after which the
-assistant reads them from your `AGENTS.md` in every session that follows.
+[writing them into your AGENTS.md](../README.md#write-the-version-edition-and-product-in-agentsmd)
+once, after which the coding agent reads them in every session that follows.
 
 ## Keeping a manual setup current
 
