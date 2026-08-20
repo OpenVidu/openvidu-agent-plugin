@@ -212,11 +212,10 @@ this without being asked, and record the answer — see
 [The skills](#the-skills).
 
 **Do not read the version off your dependencies**, and don't let your
-assistant do it either. `livekit-client`, `livekit-server-sdk`,
-`openvidu-browser` and the web components are *client* SDKs; their version
-numbers have no relationship with the OpenVidu server's, and they say nothing
-about CE vs PRO. The server's tool descriptions tell the model this
-explicitly, but it is worth knowing yourself.
+assistant do it either. `livekit-client`, `livekit-server-sdk` and the web
+components are *client* SDKs; their version numbers have no relationship with
+the OpenVidu server's, and they say nothing about CE vs PRO. The server's tool
+descriptions tell the model this explicitly, but it is worth knowing yourself.
 
 ### Say it once, in writing
 
