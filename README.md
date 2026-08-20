@@ -295,12 +295,6 @@ the agent loads when its description matches what you asked. They live in
 |---|---|
 | `openvidu-version-edition-product` | Establishes the three facts every OpenVidu answer depends on — version, edition and product — and writes them into your `AGENTS.md` / `CLAUDE.md`, so they are settled once instead of every session. The reasoning is in [What OpenVidu are you developing your app for?](#what-openvidu-are-you-developing-your-app-for) |
 
-Skills are advisory: the agent decides when one is relevant, from its
-description alone, and only then reads the rest. Some clients also let you
-invoke one by name as a command. A skill may use the MCP server or ignore it —
-the one above leans on it, because working out which deployment a project talks
-to is something the server knows how to explain.
-
 ## Troubleshooting
 
 **The plugin installed but no OpenVidu tools appear.** Not every client that
