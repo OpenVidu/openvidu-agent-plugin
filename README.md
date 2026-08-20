@@ -12,10 +12,8 @@ whatever it memorised during training, it searches and reads the real pages,
 read for the right edition and the right product.
 
 It is both an [Agent Plugins 1.0](https://agent-plugins.org) package and a
-[Claude Code plugin](https://code.claude.com/docs/en/plugins): Claude Code has
-its own plugin format rather than the standard, so this package carries the
-files for both and one install works in either. What you get is two kinds of
-component, and they are worth telling apart:
+[Claude Code plugin](https://code.claude.com/docs/en/plugins). What you get is
+two kinds of component, and they are worth telling apart:
 
 - **an MCP server** — `openvidu-docs`, hosted at
   `https://docs-mcp.openvidu.io/mcp`. This is where the documentation comes
