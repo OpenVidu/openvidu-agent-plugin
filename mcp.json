@@ -4,6 +4,10 @@
     "openvidu-docs": {
       "type": "streamable-http",
       "url": "https://docs-mcp.openvidu.io/mcp"
+    },
+    "livekit-docs": {
+      "type": "streamable-http",
+      "url": "https://docs.livekit.io/mcp"
     }
   }
 }

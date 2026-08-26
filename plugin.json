@@ -1,8 +1,8 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "openvidu",
-  "version": "0.3.0",
-  "description": "The official OpenVidu documentation for coding agents, matched to the version, edition and product of the deployment they are working against.",
+  "version": "0.4.1",
+  "description": "The official OpenVidu documentation for coding agents, matched to the version, edition and product of the deployment they are working against, plus LiveKit's SDK documentation and the rules for when each one applies.",
   "author": {
     "name": "OpenVidu",
     "url": "https://openvidu.io"
@@ -10,5 +10,11 @@
   "homepage": "https://docs-mcp.openvidu.io",
   "repository": "https://github.com/OpenVidu/openvidu-agent-plugin",
   "license": "Apache-2.0",
-  "keywords": ["openvidu", "webrtc", "livekit", "documentation", "mcp"]
+  "keywords": [
+    "openvidu",
+    "webrtc",
+    "livekit",
+    "documentation",
+    "mcp"
+  ]
 }

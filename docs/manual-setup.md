@@ -11,16 +11,26 @@ The package has two kinds of component, and here they are independent: the
 Nothing on this page updates itself — see
 [Keeping a manual setup current](#keeping-a-manual-setup-current).
 
-## The MCP server
+## The MCP servers
 
-The same server the plugin points at, configured directly. No account and no
-API key; the endpoint is
+The plugin points at two, and the examples below configure the first. Neither
+needs an account or an API key, and both speak **Streamable HTTP**.
 
-```
-https://docs-mcp.openvidu.io/mcp
-```
+| Name | Endpoint | Operated by |
+|---|---|---|
+| `openvidu-docs` | `https://docs-mcp.openvidu.io/mcp` | OpenVidu |
+| `livekit-docs` | `https://docs.livekit.io/mcp` | **LiveKit** |
 
-and the transport is **Streamable HTTP**.
+`livekit-docs` is optional and independent: it is LiveKit's own public docs
+server, configured here because OpenVidu Platform exposes LiveKit-compatible
+SDKs and LiveKit documents them in more depth. To add it, repeat any snippet
+below with that name and URL. If you do, install the
+`openvidu-livekit-sdk-docs` skill as well — it is what stops the agent
+answering deployment, configuration, edition or **pricing** questions out of
+LiveKit's documentation, which is wrong about all of them for a self-hosted
+OpenVidu. Both servers expose a tool called `get_pricing_info`, and LiveKit's
+returns LiveKit Cloud plans. See
+[Why LiveKit's docs are here too](../README.md#why-livekits-docs-are-here-too).
 
 ### Claude Code
 

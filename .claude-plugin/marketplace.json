@@ -4,7 +4,7 @@
     "name": "OpenVidu",
     "url": "https://openvidu.io"
   },
-  "description": "The official OpenVidu documentation for coding agents, matched to the version, edition and product of the deployment they are working against.",
+  "description": "The official OpenVidu documentation for coding agents, matched to the version, edition and product of the deployment they are working against, plus LiveKit's SDK documentation and the rules for when each one applies.",
   "plugins": [
     {
       "name": "openvidu",
@@ -12,8 +12,8 @@
         "source": "github",
         "repo": "OpenVidu/openvidu-agent-plugin"
       },
-      "description": "The official OpenVidu documentation for coding agents, matched to the version, edition and product of the deployment they are working against.",
-      "version": "0.3.0",
+      "description": "The official OpenVidu documentation for coding agents, matched to the version, edition and product of the deployment they are working against, plus LiveKit's SDK documentation and the rules for when each one applies.",
+      "version": "0.4.1",
       "author": {
         "name": "OpenVidu",
         "url": "https://openvidu.io"
