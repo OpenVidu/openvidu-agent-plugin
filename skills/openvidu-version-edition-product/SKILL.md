@@ -47,8 +47,10 @@ secret's value.
 ## 4. Use them on every answer
 
 Pass `version` explicitly to `search_docs`, `get_doc_page`,
-`list_doc_sections` and `get_changelog` for the rest of the session, and read
-every result through the edition and the product: a PRO-only feature does not
+`list_doc_sections` and `get_changelog` for the rest of the session. Pass the
+release the deployment reports (`3.8.1`): documentation is published per minor,
+so the server resolves it to `3.8` and says so. Read every result through the
+edition and the product: a PRO-only feature does not
 exist on CE, and Platform and Meet do the same thing through different APIs.
 The index is versioned but knows nothing about edition or product, so that
 part of the interpretation is yours — state which one you assumed whenever it

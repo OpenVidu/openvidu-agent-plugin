@@ -187,7 +187,12 @@ everything downstream is aimed at the same target.
 
 ### Finding them out
 
-Ask your coding agent to work it out and it will.
+Ask your coding agent to work it out and it will. From **OpenVidu 3.9.0** the
+deployment reports its own version and edition, so the agent reads them
+straight from it; on 3.8 and earlier it works them out from the deployment's
+image tag instead. Either way it follows the procedure the documentation
+server hands it, which includes asking you before it touches a remote
+deployment and never reading a credential's value.
 
 **Do not read the version off your dependencies**, and don't let your coding
 agent do it either. `livekit-client`, `livekit-server-sdk` and the web
@@ -201,8 +206,8 @@ So you don't repeat it in every conversation, put this in your project's
 `AGENTS.md` or `CLAUDE.md`:
 
 ```markdown
-This project connects to an OpenVidu 3.9.0 pro deployment, using OpenVidu Meet.
-When querying the OpenVidu documentation MCP, always pass version="3.9.0",
+This project connects to an OpenVidu 3.8.0 pro deployment, using OpenVidu Meet.
+When querying the OpenVidu documentation MCP, always pass version="3.8.0",
 and read the answers for that edition and product.
 ```
 
@@ -246,6 +251,9 @@ needs them.
 
 - Every tool takes an optional `version`. Without it, the newest indexed
   version is used.
+- **Documentation is published per minor release.** Pass the version your
+  deployment reports — `3.8.0`, `3.8.1` — and the server answers from the
+  documentation set for `3.8`, saying so in the response. `3.8` works too.
 - Ask for a version that isn't indexed and it **fails, listing the ones it
   has**. It will never quietly answer with a different version — documentation
   for the wrong release is worse than none.

@@ -202,8 +202,12 @@ def marketplace(manifest: dict) -> dict:
     """Claude Code marketplace catalog, so the published repository installs
     with two commands.
 
-    The plugin source is the GitHub repository rather than a relative path:
-    relative paths don't resolve when a marketplace is added by URL.
+    The plugin source is the repository's **HTTPS clone URL**, not a relative
+    path and not `{"source": "github"}`: relative paths don't resolve when a
+    marketplace is added by URL, and the `github` form makes Claude Code clone
+    over SSH (`git@github.com:`), which fails for anyone without a GitHub SSH
+    key — most people installing a documentation plugin. Every entry in
+    Anthropic's own marketplace uses an HTTPS URL or a path for this reason.
     """
     repo = manifest.get("repository", "")
     match = re.match(r"^https://github\.com/([^/]+/[^/.]+)", repo)
@@ -213,7 +217,7 @@ def marketplace(manifest: dict) -> dict:
         )
     entry = {
         "name": manifest["name"],
-        "source": {"source": "github", "repo": match.group(1)},
+        "source": {"source": "url", "url": f"https://github.com/{match.group(1)}.git"},
     }
     for key in ("description", "version", "author", "homepage", "repository",
                 "license", "keywords"):

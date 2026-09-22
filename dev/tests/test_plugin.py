@@ -121,10 +121,14 @@ def test_marketplace_points_at_the_published_repository(manifest):
     assert catalog["name"] == bp.MARKETPLACE_NAME
     entry, = catalog["plugins"]
     assert entry["name"] == manifest["name"]
-    # A GitHub source rather than a relative path: relative paths do not
-    # resolve when a marketplace is added by URL.
-    assert entry["source"] == {"source": "github", "repo": "OpenVidu/openvidu-agent-plugin"}
-    assert manifest["repository"].endswith(entry["source"]["repo"])
+    # An HTTPS clone URL, not a relative path (which does not resolve when the
+    # marketplace is added by URL) and not {"source": "github"} (which makes
+    # Claude Code clone over SSH, so the install fails without a GitHub SSH key).
+    assert entry["source"] == {
+        "source": "url",
+        "url": "https://github.com/OpenVidu/openvidu-agent-plugin.git",
+    }
+    assert entry["source"]["url"] == manifest["repository"] + ".git"
 
 
 # ---------------------------------------------------------------------------
