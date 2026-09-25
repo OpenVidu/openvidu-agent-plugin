@@ -27,9 +27,9 @@ Four invariants that are load-bearing. Everything else is in `dev/README.md`.
   docs under `dev/` — and run the tooling from there, or `pytest` finds no
   configuration. A new skill goes in `skills/<name>/`, not under `dev/`.
 - **The endpoint in `mcp.json` is owned elsewhere.** It points at the
-  deployment maintained in
-  [`OpenVidu/openvidu-docs-mcp`](https://github.com/OpenVidu/openvidu-docs-mcp);
-  changing it here is a major version bump and breaks every existing install
+  deployment maintained in `OpenVidu/openvidu-docs-mcp`, a private repository
+  — so never link to it from anything in this one, which is public; changing
+  the endpoint here is a major version bump and breaks every existing install
   until republished.
 
 ```bash

@@ -23,10 +23,10 @@ package and nothing else. It buys legibility, not bytes: neither Agent Plugins
 to mentally skip is better than four. No client reads it, and none rejects
 extra files.
 
-The MCP server itself lives in a different repository
-([OpenVidu/openvidu-docs-mcp](https://github.com/OpenVidu/openvidu-docs-mcp)),
-which is where the documentation index, the tools and the deployment are
-maintained. This repository only carries what a client installs.
+The MCP server itself lives in a different repository, OpenVidu's private
+`openvidu-docs-mcp`, which is where the documentation index, the tools and the
+deployment are maintained. This repository only carries what a client
+installs.
 
 ## What is in it, and what is generated
 

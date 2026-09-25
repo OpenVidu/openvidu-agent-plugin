@@ -161,8 +161,8 @@ def test_the_livekit_server_is_livekits_own_endpoint(mcp):
     """The package pre-configures LiveKit's public docs MCP server — the same
     install LiveKit documents itself. It must point at their host and nothing
     else: proxying it through OpenVidu infrastructure is a different design
-    with a different legal footing (see openvidu-docs-mcp,
-    docs/livekit-docs-study.md, option C)."""
+    with a different legal footing, weighed and rejected in the server
+    repository's docs/livekit-docs.md."""
     assert mcp["mcpServers"]["livekit-docs"]["url"] == "https://docs.livekit.io/mcp"
 
 
