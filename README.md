@@ -236,9 +236,9 @@ Transport: **Streamable HTTP**. No API key, no login required.
 
 | Tool | What it does |
 |---|---|
-| `search_docs` | Searches the documentation. Handles word variants (*record* finds *recording*) and OpenVidu vocabulary (*auth* finds *authentication*) |
-| `get_doc_page` | Returns the full content of a page |
-| `list_doc_sections` | The table of contents: which pages exist, grouped by section |
+| `search_docs` | Searches the documentation. Handles word variants (*record* finds *recording*) and OpenVidu vocabulary (*auth* finds *authentication*). Up to five searches in one call, and results page by page |
+| `get_doc_page` | Returns the full content of a page, or of up to ten pages in one call |
+| `list_doc_sections` | The table of contents: first an overview of the sections and how many pages each holds, then the pages of the one you ask for |
 | `list_versions` | Which documentation versions this server has indexed, and which one it uses by default |
 | `resolve_openvidu_version_edition_product` | How to find out which deployment your project talks to: version, edition (CE/PRO) and product (Platform/Meet). Also maps a LiveKit Server version to OpenVidu version(s) |
 | `get_changelog` | The release notes for a version, without having to find the page first. Takes an optional product (*meet*, *platform*) |
