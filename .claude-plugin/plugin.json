@@ -1,6 +1,6 @@
 {
   "name": "openvidu",
-  "description": "The official OpenVidu documentation for coding agents, matched to the version, edition and product of the deployment they are working against, plus LiveKit's SDK documentation and the rules for when each one applies.",
+  "description": "The official OpenVidu documentation for coding agents, matched to the version, edition and product of the deployment they are working against.",
   "version": "1.0.0",
   "author": {
     "name": "OpenVidu",

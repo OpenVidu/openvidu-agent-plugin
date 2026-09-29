@@ -69,12 +69,10 @@ def test_the_server_is_remote_and_encrypted(mcp):
 def test_skills_follow_the_agent_skills_rules():
     """Frontmatter `name` must equal the directory name, or clients skip the
     skill; description is capped at 1024 characters."""
-    assert bp.check_skills() == ["openvidu-livekit-sdk-docs",
-                                 "openvidu-version-edition-product"]
+    assert bp.check_skills() == ["openvidu-version-edition-product"]
 
 
-@pytest.mark.parametrize("skill", ["openvidu-version-edition-product",
-                                  "openvidu-livekit-sdk-docs"])
+@pytest.mark.parametrize("skill", ["openvidu-version-edition-product"])
 def test_skill_description_says_when_to_use_it(skill):
     """The description is the only thing loaded before activation: it is what
     makes the model reach for the skill at the right moment."""
@@ -157,21 +155,9 @@ def test_install_commands_name_the_real_marketplace_and_plugin(manifest):
     assert command in (REPO_ROOT / "README.md").read_text(encoding="utf-8")
 
 
-def test_the_livekit_server_is_livekits_own_endpoint(mcp):
-    """The package pre-configures LiveKit's public docs MCP server — the same
-    install LiveKit documents itself. It must point at their host and nothing
-    else: proxying it through OpenVidu infrastructure is a different design
-    with a different legal footing, weighed and rejected in the server
-    repository's docs/livekit-docs.md."""
-    assert mcp["mcpServers"]["livekit-docs"]["url"] == "https://docs.livekit.io/mcp"
-
-
-def test_a_skill_tells_the_agent_which_docs_win():
-    """Two documentation servers with overlapping vocabulary is a hazard, not
-    a feature, unless something arbitrates. The skill is that arbiter, and it
-    has to name the two tools that collide by name."""
-    text = (REPO_ROOT / "skills" / "openvidu-livekit-sdk-docs" / "SKILL.md").read_text(
-        encoding="utf-8")
-    assert "get_pricing_info" in text, "the pricing tool collides on both servers"
-    assert "LiveKit Cloud" in text
-    assert "not versioned" in text.lower()
+def test_the_package_ships_one_documentation_server(mcp):
+    """LiveKit's documentation is read by the agent's own fetch tool, as the
+    openvidu-docs server's instructions say when and how. A second server was
+    measured against that in the server repository's evals, and dropped: it
+    did no better, cost more, and let the agent reach LiveKit Cloud pages."""
+    assert list(mcp["mcpServers"]) == ["openvidu-docs"]
