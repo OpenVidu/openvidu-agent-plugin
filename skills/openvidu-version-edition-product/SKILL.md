@@ -23,18 +23,23 @@ have.
 Read `AGENTS.md`, `CLAUDE.md` and the README. If they are pinned there, use
 them: no tool call needed.
 
-## 2. Otherwise, ask the `openvidu-docs` MCP server how to find them
+## 2. Otherwise, find them only when the answer depends on them
 
-Call **`resolve_openvidu_version_edition_product`** with no arguments. It
-returns the current, complete procedure: how to tell Platform from Meet, where
-the deployment URL and its credentials live, which endpoint reports version and
+Many answers are the same for every version, edition and product. Search with
+the default version first: every response says which version answered and
+whether the pages it returned change between versions.
+
+When the answer does depend on them, call
+**`resolve_openvidu_version_edition_product`** with no arguments. It returns the
+current, complete procedure: how to tell Platform from Meet, where the
+deployment URL and its credentials live, which endpoint reports version and
 edition, what to do when that endpoint isn't available, and the security rules
 to follow while doing it (credentials are never read or printed, remote hosts
-are never contacted without asking).
-
-Follow that procedure — do not improvise your own, and do not reproduce its
-steps here: the server is the single source of truth for them, so it stays
-correct even where this skill isn't installed.
+are never contacted without asking). Follow that procedure — do not improvise
+your own, and do not reproduce its steps here: the server is the single source
+of truth for them. If you cannot follow it (no project, no deployment to query,
+no user to ask), answer for the latest version and say which version, edition
+and product you assumed.
 
 ## 3. Write them down
 
