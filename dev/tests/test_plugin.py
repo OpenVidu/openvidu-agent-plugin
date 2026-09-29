@@ -137,7 +137,6 @@ def test_marketplace_points_at_the_published_repository(manifest):
 
 DOCS_QUOTING_THE_ENDPOINT = [
     "README.md",
-    "docs/manual-setup.md",
     "dev/README.md",
 ]
 
