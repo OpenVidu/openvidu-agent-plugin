@@ -37,19 +37,17 @@ VS Code, Cursor, GitHub Copilot, Codex, Kiro and any other client: see
 
 | Component | What it is |
 |---|---|
-| `openvidu-docs` MCP server | OpenVidu's documentation, per version, at `https://docs-mcp.openvidu.io/mcp`. Operated by OpenVidu |
-| `livekit-docs` MCP server | LiveKit's own public docs server, at `https://docs.livekit.io/mcp`, for the SDK surface OpenVidu Platform shares with LiveKit. Operated by LiveKit |
-| `openvidu-version-edition-product` skill | Establishes the version, edition and product your project targets, and pins them in `AGENTS.md` / `CLAUDE.md` |
-| `openvidu-livekit-sdk-docs` skill | Decides which of the two servers answers a question, so LiveKit's docs are never used for deployment, configuration, editions or pricing |
+| `openvidu-docs` MCP server | OpenVidu's documentation, per version, at `https://docs-mcp.openvidu.io/mcp`. Its instructions also tell the agent when to read LiveKit's documentation for SDK detail, and what never to take from it |
+| `openvidu-version-edition-product` skill | Establishes the version, edition and product your project targets when an answer depends on them, and pins them in `AGENTS.md` / `CLAUDE.md` |
 
-What each tool does, and why LiveKit's docs are included:
+What each tool does, and how LiveKit's documentation fits in:
 [What's inside](https://openvidu.io/docs/coding-agents/agent-plugin/#whats-inside).
 
 ## What's in the package
 
 ```text
 plugin.json                     Agent Plugins 1.0 manifest
-mcp.json                        the two documentation MCP servers (Streamable HTTP)
+mcp.json                        the documentation MCP server (Streamable HTTP)
 skills/                         one directory per skill, each with a SKILL.md
 .claude-plugin/plugin.json      Claude Code manifest
 .claude-plugin/marketplace.json Claude Code marketplace
