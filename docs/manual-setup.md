@@ -11,26 +11,12 @@ The package has two kinds of component, and here they are independent: the
 Nothing on this page updates itself — see
 [Keeping a manual setup current](#keeping-a-manual-setup-current).
 
-## The MCP servers
+## The MCP server
 
-The plugin points at two, and the examples below configure the first. Neither
-needs an account or an API key, and both speak **Streamable HTTP**.
-
-| Name | Endpoint | Operated by |
-|---|---|---|
-| `openvidu-docs` | `https://docs-mcp.openvidu.io/mcp` | OpenVidu |
-| `livekit-docs` | `https://docs.livekit.io/mcp` | **LiveKit** |
-
-`livekit-docs` is optional and independent: it is LiveKit's own public docs
-server, configured here because OpenVidu Platform exposes LiveKit-compatible
-SDKs and LiveKit documents them in more depth. To add it, repeat any snippet
-below with that name and URL. If you do, install the
-`openvidu-livekit-sdk-docs` skill as well — it is what stops the agent
-answering deployment, configuration, edition or **pricing** questions out of
-LiveKit's documentation, which is wrong about all of them for a self-hosted
-OpenVidu. Both servers expose a tool called `get_pricing_info`, and LiveKit's
-returns LiveKit Cloud plans. See
-[Why LiveKit's docs are here too](../README.md#why-livekits-docs-are-here-too).
+`openvidu-docs`, at `https://docs-mcp.openvidu.io/mcp`. It needs no account or
+API key, and speaks **Streamable HTTP**. It also tells the agent when to read
+LiveKit's documentation, which the agent does with its own fetch tool: see
+[LiveKit's documentation](../README.md#livekits-documentation).
 
 ### Claude Code
 

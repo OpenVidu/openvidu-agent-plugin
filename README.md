@@ -15,13 +15,13 @@ It is both an [Agent Plugins 1.0](https://agent-plugins.org) package and a
 [Claude Code plugin](https://code.claude.com/docs/en/plugins). What you get is
 two kinds of component, and they are worth telling apart:
 
-- **MCP servers** — where the documentation comes from: the agent searches
-  them and reads pages out of them. `openvidu-docs` serves OpenVidu's own
-  documentation for the version you are actually running; `livekit-docs` is
-  LiveKit's own public server, included because OpenVidu Platform exposes
-  LiveKit-compatible SDKs and LiveKit documents them in more depth. See
-  [The documentation servers](#the-documentation-server) and
-  [Why LiveKit's docs are here too](#why-livekits-docs-are-here-too).
+- **an MCP server** — where the documentation comes from: the agent searches
+  it and reads pages out of it. `openvidu-docs` serves OpenVidu's own
+  documentation for the version you are actually running, and tells the agent
+  when LiveKit's documentation applies, since OpenVidu Platform exposes
+  LiveKit-compatible SDKs. See
+  [The documentation server](#the-documentation-server) and
+  [LiveKit's documentation](#livekits-documentation).
 - **skills** — procedures the agent loads when a task calls for one, so it
   works the way an OpenVidu project needs instead of improvising. See
   [The skills](#the-skills).
@@ -152,7 +152,7 @@ How you get a new plugin version depends entirely on the client, and on
 
 ```text
 plugin.json                     Agent Plugins 1.0 manifest
-mcp.json                        the two documentation MCP servers (Streamable HTTP)
+mcp.json                        the documentation MCP server (Streamable HTTP)
 skills/                         one directory per skill, each with a SKILL.md
 .claude-plugin/plugin.json      Claude Code manifest
 .claude-plugin/marketplace.json Claude Code marketplace
@@ -216,9 +216,6 @@ will often have added them already. And facts only — never put credentials in
 that file.
 
 ## The documentation server
-
-This section is about `openvidu-docs`. For `livekit-docs`, see
-[Why LiveKit's docs are here too](#why-livekits-docs-are-here-too).
 
 Everything under this heading concerns one component: the `openvidu-docs` MCP
 server, which is what carries the documentation. None of it applies to
@@ -310,9 +307,8 @@ the agent loads when its description matches what you asked. They live in
 | Skill | What it does |
 |---|---|
 | `openvidu-version-edition-product` | Establishes the three facts every OpenVidu answer depends on — version, edition and product — and writes them into your `AGENTS.md` / `CLAUDE.md`, so they are settled once instead of every session. The reasoning is in [What OpenVidu are you developing your app for?](#what-openvidu-are-you-developing-your-app-for) |
-| `openvidu-livekit-sdk-docs` | Decides which of the two documentation servers answers a given question, so LiveKit's docs are used for SDK detail and never for deployment, configuration, editions or pricing. See [Why LiveKit's docs are here too](#why-livekits-docs-are-here-too) |
 
-## Why LiveKit's docs are here too
+## LiveKit's documentation
 
 OpenVidu Platform is a fork of LiveKit and your app imports the LiveKit
 client and server SDKs directly — `livekit-client`, `livekit-server-sdk` and
@@ -320,24 +316,22 @@ their siblings. LiveKit's own documentation covers that SDK surface in far
 more depth than openvidu.io does: the full API reference, the Agents
 framework, the WebRTC transport details.
 
-So the package pre-configures **LiveKit's own public MCP server**
-(<https://docs.livekit.io/mcp>) alongside OpenVidu's. This is the same setup
-LiveKit documents on its
-[Coding agent support](https://docs.livekit.io/intro/coding-agents/) page —
-your agent talks to LiveKit directly, and nothing of LiveKit's is copied,
-cached or served by OpenVidu. That server is **operated by LiveKit, not by
-OpenVidu**: its availability and its terms are theirs.
+So `openvidu-docs` tells your agent when a question needs LiveKit's
+documentation, and its searches also point at the LiveKit pages that match,
+kept apart from OpenVidu's own results. Your agent then reads those pages
+itself, from <https://docs.livekit.io>, with its own fetch tool: nothing of
+LiveKit's is copied, cached or served by OpenVidu. The package bundles no
+LiveKit server, and needs none.
 
-Two things to know, both of which the `openvidu-livekit-sdk-docs` skill
-enforces so you do not have to:
+Two things to know, both of which the server tells your agent so you do not
+have to:
 
 **OpenVidu's documentation wins on anything that is not SDK surface.**
 Deployment, installation, configuration, editions (COMMUNITY vs PRO),
 OpenVidu Meet, recording as OpenVidu ships it, observability and pricing are
 all answered by `openvidu-docs`, and LiveKit's documentation is wrong about
-them here. Watch out for pricing in particular: **both servers expose a tool
-called `get_pricing_info`**, and LiveKit's returns LiveKit Cloud plans, which
-have nothing to do with a self-hosted OpenVidu.
+them here. Pricing in particular: LiveKit's pages describe LiveKit Cloud
+plans, which have nothing to do with a self-hosted OpenVidu.
 
 The line is **"can you run this yourself?"**, not "does the page mention
 Cloud". LiveKit Cloud itself, LiveKit Inference (their managed model hosting),
@@ -355,12 +349,8 @@ bundled — LiveKit Server 1.12.0 on OpenVidu 3.8.0, and older further back.
 The client SDK surface is stable and generally applies as written; anything
 that depends on server behaviour (new `RoomService` options, configuration
 flags, webhook fields, Egress and Ingress capabilities) may not exist in your
-version yet. `resolve_openvidu_version_edition_product` on `openvidu-docs`
-maps between the two version numbers in both directions.
-
-If you would rather not have LiveKit's server configured, remove the
-`livekit-docs` entry from your client's MCP configuration; nothing else in the
-package depends on it.
+version yet. `resolve_openvidu_version_edition_product` maps between the two
+version numbers in both directions.
 
 ## Troubleshooting
 
