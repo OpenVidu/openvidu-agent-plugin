@@ -7,7 +7,7 @@
     "name": "OpenVidu",
     "url": "https://openvidu.io"
   },
-  "homepage": "https://docs-mcp.openvidu.io",
+  "homepage": "https://openvidu.io/docs/coding-agents/agent-plugin/",
   "repository": "https://github.com/OpenVidu/openvidu-agent-plugin",
   "license": "Apache-2.0",
   "keywords": [

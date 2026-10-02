@@ -102,7 +102,7 @@ its side:
 Once listed, a user adds the marketplace once —
 `/plugin marketplace add anthropics/claude-plugins-community` — and installs
 with `/plugin install openvidu@claude-community`, instead of pointing at our
-own repository. See [`../README.md`](../README.md) for the commands as shown
-to users, and its ["Keeping the plugin updated"](../README.md#keeping-the-plugin-updated)
-section for how this changes what that means for someone using Claude Code
-specifically.
+own repository. See the
+[installation page](https://openvidu.io/docs/coding-agents/agent-plugin/#install)
+for the commands as shown to users, and for how this changes updates for
+someone using Claude Code specifically.
