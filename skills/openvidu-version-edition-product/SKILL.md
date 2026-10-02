@@ -19,6 +19,16 @@ Establish them **once** and write them down. Guessing produces confident
 answers about a release the user isn't running, or about an edition they don't
 have.
 
+## 0. If the OpenVidu documentation tools are missing
+
+This skill works with the `openvidu-docs` MCP server (`search_docs`,
+`resolve_openvidu_version_edition_product`…). If those tools are not
+available, the skill was installed on its own: tell the user to add the
+server, `https://docs-mcp.openvidu.io/mcp` (Streamable HTTP, no
+authentication), or to install the OpenVidu Agent Plugin, as described at
+https://openvidu.io/docs/coding-agents/agent-plugin/. Until then, say that
+your answers come from memory and may not match their release.
+
 ## 1. Look for them in the project first
 
 Read `AGENTS.md`, `CLAUDE.md` and the README. If they are pinned there, use
