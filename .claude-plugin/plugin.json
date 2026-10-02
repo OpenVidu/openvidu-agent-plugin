@@ -1,5 +1,6 @@
 {
   "name": "openvidu",
+  "displayName": "OpenVidu",
   "description": "The official OpenVidu documentation for coding agents, matched to the version, edition and product of the deployment they are working against.",
   "version": "1.0.0",
   "author": {
@@ -11,9 +12,13 @@
   "license": "Apache-2.0",
   "keywords": [
     "openvidu",
+    "openvidu-meet",
+    "openvidu-platform",
     "webrtc",
-    "livekit",
-    "documentation",
-    "mcp"
-  ]
+    "video-conferencing"
+  ],
+  "icon": "./assets/icon.png",
+  "documentationUrl": "https://openvidu.io/docs/coding-agents/agent-plugin/",
+  "supportUrl": "https://github.com/OpenVidu/openvidu-agent-plugin/issues",
+  "privacyPolicyUrl": "https://openvidu.io/docs/coding-agents/agent-plugin/#privacy"
 }

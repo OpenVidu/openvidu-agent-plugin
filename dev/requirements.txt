@@ -1,4 +1,4 @@
-# Only needed to validate the package (pytest, scripts/build_plugin.py).
+# Only needed to validate the package (pytest, dev/build_plugin.py).
 # Nothing here is shipped: an Agent Plugin has no runtime dependencies.
 pytest>=8.0
 jsonschema>=4.0

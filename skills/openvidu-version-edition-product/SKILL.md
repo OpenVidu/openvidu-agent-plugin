@@ -1,6 +1,7 @@
 ---
 name: openvidu-version-edition-product
 description: Establish and record which OpenVidu deployment a project targets — version, edition (CE/PRO) and product (OpenVidu Platform or OpenVidu Meet) — in its AGENTS.md/CLAUDE.md, and use those three facts when answering. Use whenever the user asks about OpenVidu, or about rooms, tracks, recording, egress, ingress, webhooks, authentication or deployment in an OpenVidu project, and before stating any OpenVidu behaviour from memory.
+compatibility: Requires the openvidu-docs MCP server (https://docs-mcp.openvidu.io/mcp) and network access.
 ---
 
 # Answer OpenVidu questions against the right deployment
@@ -8,7 +9,7 @@ description: Establish and record which OpenVidu deployment a project targets �
 OpenVidu answers depend on three facts about the deployment the project talks
 to, none of which are visible in the question itself:
 
-- **version** — the documentation differs between releases (e.g. `3.8.0`).
+- **version** — the documentation differs between releases (e.g. `3.9.0`).
 - **edition** — `ce` or `pro`; PRO has features CE does not.
 - **product** — **OpenVidu Platform** (the app uses the LiveKit SDKs) or
   **OpenVidu Meet** (REST API plus the `<openvidu-meet>` web component). Two
@@ -53,8 +54,8 @@ secret's value.
 
 Pass `version` explicitly to `search_docs`, `get_doc_page`,
 `list_doc_sections` and `get_changelog` for the rest of the session. Pass the
-release the deployment reports (`3.8.1`): documentation is published per minor,
-so the server resolves it to `3.8` and says so. Read every result through the
+release the deployment reports (`3.9.1`): documentation is published per minor,
+so the server resolves it to `3.9` and says so. Read every result through the
 edition and the product: a PRO-only feature does not
 exist on CE, and Platform and Meet do the same thing through different APIs.
 The index is versioned but knows nothing about edition or product, so that

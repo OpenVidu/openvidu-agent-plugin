@@ -114,6 +114,26 @@ def test_claude_manifest_is_not_an_agent_plugins_document(manifest):
     assert generated["version"] == manifest["version"]
 
 
+def test_claude_manifest_carries_the_listing_fields(manifest):
+    """Anthropic's directory shows these, and asks for a privacy policy from
+    any plugin that calls a remote server."""
+    generated = read(PLUGIN_DIR / ".claude-plugin" / "plugin.json")
+    assert generated["displayName"] == "OpenVidu"
+    icon = PLUGIN_DIR / generated["icon"]
+    assert icon.is_file() and icon.read_bytes()[:8] == b"\x89PNG\r\n\x1a\n"
+    assert generated["documentationUrl"] == manifest["homepage"]
+    assert generated["privacyPolicyUrl"] == manifest["homepage"] + "#privacy"
+    assert generated["supportUrl"] == manifest["repository"] + "/issues"
+
+
+def test_marketplace_entry_has_no_listing_fields():
+    """The validator flags them in a marketplace entry: they belong to the
+    plugin's own manifest."""
+    entry, = read(PLUGIN_DIR / ".claude-plugin" / "marketplace.json")["plugins"]
+    for key in ("displayName", "icon", "documentationUrl", "supportUrl", "privacyPolicyUrl"):
+        assert key not in entry, key
+
+
 def test_marketplace_points_at_the_published_repository(manifest):
     catalog = read(PLUGIN_DIR / ".claude-plugin" / "marketplace.json")
     assert catalog["name"] == bp.MARKETPLACE_NAME
@@ -156,7 +176,7 @@ def test_install_commands_name_the_real_marketplace_and_plugin(manifest):
 
 def test_the_package_ships_one_documentation_server(mcp):
     """LiveKit's documentation is read by the agent's own fetch tool, as the
-    openvidu-docs server's instructions say when and how. A second server was
-    measured against that in the server repository's evals, and dropped: it
-    did no better, cost more, and let the agent reach LiveKit Cloud pages."""
+    openvidu-docs server's instructions say when and how. Bundling LiveKit's
+    docs server as well was measured and dropped: it answered no better, cost
+    more, and led agents to LiveKit Cloud pages."""
     assert list(mcp["mcpServers"]) == ["openvidu-docs"]

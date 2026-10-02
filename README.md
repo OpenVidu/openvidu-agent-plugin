@@ -4,7 +4,7 @@
 building real-time video conferencing and WebRTC applications, built on top
 of [LiveKit](https://livekit.io) and mediasoup.
 
-This plugin gives your coding agent the official OpenVidu documentation —
+This plugin gives your coding agent the official OpenVidu documentation:
 instead of guessing from whatever it memorised during training, it searches
 and reads the real pages, **for the OpenVidu deployment you are actually
 running**: the right version, read for the right edition and the right
@@ -13,25 +13,25 @@ product.
 It is both an [Agent Plugins 1.0](https://agent-plugins.org) package and a
 [Claude Code plugin](https://code.claude.com/docs/en/plugins).
 
-**Documentation: <https://openvidu.io/docs/coding-agents/agent-plugin/>** —
-installation in every client, updates, setting it up by hand, and
-troubleshooting.
+**Documentation: <https://openvidu.io/docs/coding-agents/agent-plugin/>**,
+with updates, setting it up by hand, and troubleshooting.
 
-## Quick start
+## Install
 
-In Claude Code:
+| Client | |
+|---|---|
+| Claude Code | `/plugin marketplace add OpenVidu/openvidu-agent-plugin`, then `/plugin install openvidu@openvidu` |
+| VS Code | **Chat: Install Plugin From Source**, with `https://github.com/OpenVidu/openvidu-agent-plugin` |
+| GitHub Copilot CLI | `copilot plugin install OpenVidu/openvidu-agent-plugin` |
+| Codex CLI | `codex plugin marketplace add OpenVidu/openvidu-agent-plugin`, then `codex plugin add openvidu@openvidu` |
+| Cursor | `git clone https://github.com/OpenVidu/openvidu-agent-plugin ~/.cursor/plugins/local/openvidu` |
+| Kiro | **Powers → Add Custom Power → Import power from GitHub**, with the repository URL |
 
-```
-/plugin marketplace add OpenVidu/openvidu-agent-plugin
-/plugin install openvidu@openvidu
-```
-
-Then turn on automatic updates for it, which Claude Code leaves off for
-marketplaces other than Anthropic's: `/plugin` → **Marketplaces** →
-`openvidu` → **Enable auto-update**.
-
-VS Code, Cursor, GitHub Copilot, Codex, Kiro and any other client: see
-[Install](https://openvidu.io/docs/coding-agents/agent-plugin/#install).
+Claude Code leaves automatic updates off for marketplaces other than
+Anthropic's: turn them on in `/plugin` → **Marketplaces** → `openvidu` →
+**Enable auto-update**. How every other client updates, and how to configure
+the server and the skill without a plugin, is on the
+[documentation page](https://openvidu.io/docs/coding-agents/agent-plugin/#install).
 
 ## What you get
 
@@ -43,6 +43,34 @@ VS Code, Cursor, GitHub Copilot, Codex, Kiro and any other client: see
 What each tool does, and how LiveKit's documentation fits in:
 [What's inside](https://openvidu.io/docs/coding-agents/agent-plugin/#whats-inside).
 
+## Try it
+
+- "Using the OpenVidu docs, how do I record a room with individual tracks?"
+- "Work out which OpenVidu version, edition and product this project uses, and
+  write them into AGENTS.md."
+- "Add a backend endpoint that creates an OpenVidu Meet room and returns the
+  URL our frontend passes to the web component. Check the docs for our
+  version."
+- "Does the Egress service need S3 credentials, and how are they configured?"
+
+## Data and privacy
+
+The skill runs in your agent; only the MCP server is remote. Each request your
+agent makes to it is logged as one line: the tool, what it asked for (for a
+search, the search terms), the documentation version, the outcome and the
+agent's name and version. Your conversation, your prompts and your code are
+never sent. The IP address is used only to group a client's requests into a
+visit and is never stored; logs are deleted after 7 days, and the archive,
+which holds no addresses, after 395 days. Nothing is shared with third parties.
+The details are in the
+[privacy section](https://openvidu.io/docs/coding-agents/agent-plugin/#privacy).
+
+## Support
+
+Report problems with the plugin, its skill or its server configuration in
+[this repository's issues](https://github.com/OpenVidu/openvidu-agent-plugin/issues).
+For help with OpenVidu itself, see [OpenVidu support](https://openvidu.io/support/).
+
 ## What's in the package
 
 ```text
@@ -52,17 +80,12 @@ skills/                         one directory per skill, each with a SKILL.md
 .claude-plugin/plugin.json      Claude Code manifest
 .claude-plugin/marketplace.json Claude Code marketplace
 .mcp.json                       Claude Code MCP config
+assets/icon.png                 the plugin's icon
+CHANGELOG.md                    what each version changed
 LICENSE                         Apache 2.0
 dev/                            not part of the plugin: how it is built,
                                 validated and published
 ```
-
-## Source
-
-This repository is what gets installed: the plugin manifest, the MCP server
-configuration, and the skills. Report issues with any of those here. The
-documentation server behind the MCP endpoint is maintained separately by the
-OpenVidu team, and the user documentation lives on openvidu.io.
 
 ## Development
 

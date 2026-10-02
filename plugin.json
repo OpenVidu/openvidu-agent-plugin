@@ -12,9 +12,9 @@
   "license": "Apache-2.0",
   "keywords": [
     "openvidu",
+    "openvidu-meet",
+    "openvidu-platform",
     "webrtc",
-    "livekit",
-    "documentation",
-    "mcp"
+    "video-conferencing"
   ]
 }

@@ -5,15 +5,20 @@ This repository IS the Agent Plugins 1.0 package: `plugin.json`, `mcp.json`,
 and `skills/` sit at its root, which is what every client on
 https://agent-plugins.org/compatible-clients reads directly.
 
-Claude Code does NOT implement Agent Plugins (checked against its plugin
-reference): it expects the manifest at `.claude-plugin/plugin.json`, MCP
-servers at `.mcp.json`, and the remote transport spelled `http` rather than
-`streamable-http`. Rather than ask OpenVidu users on Claude Code to configure
-the server by hand, the package ships those files too, GENERATED from the
-portable pair so the endpoint URL and the version exist in exactly one place.
+Claude Code does NOT implement Agent Plugins: it reads the manifest at
+`.claude-plugin/plugin.json` and MCP servers at `.mcp.json`, and ignores the
+root `mcp.json`. It accepts `streamable-http` as an alias of `http` there, but
+Anthropic's plugin directory accepts only `http`, `sse` and `ws` for a remote
+server, so the generated file spells it `http`. Rather than ask OpenVidu users
+on Claude Code to configure the server by hand, the package ships those files
+too, GENERATED from the portable pair so the endpoint URL and the version exist
+in exactly one place.
 
-The same generation writes `.claude-plugin/marketplace.json`, which turns this
-repository into a one-command install for Claude Code.
+The generated manifest also carries the listing fields Anthropic's directory
+shows (display name, icon, documentation, support and privacy URLs), which the
+portable manifest's closed schema has no room for. The same generation writes
+`.claude-plugin/marketplace.json`, which turns this repository into a
+one-command install for Claude Code.
 
 Deliberate deviation: §8 of the specification says client-specific files
 belong under a reverse-domain directory (`com.anthropic.claude-code/`). Claude
@@ -49,6 +54,11 @@ MARKETPLACE_NAME = "openvidu"
 # and marketplace schemas are validated field by field, and an unrecognized key
 # shows up as a validation warning. `--check` (wired into the test suite) is
 # what actually stops a hand edit from surviving.
+
+# Claude Code's listing fields. The URLs derive from `homepage` and
+# `repository`; a marketplace entry must not carry any of them.
+DISPLAY_NAME = "OpenVidu"
+ICON = "assets/icon.png"
 
 # Portable transport -> Claude Code transport.
 TRANSPORT_MAP = {"streamable-http": "http", "sse": "sse"}
@@ -161,14 +171,20 @@ def parse_frontmatter(path: Path) -> dict:
 def claude_manifest(manifest: dict) -> dict:
     """Claude Code's `.claude-plugin/plugin.json`.
 
-    Same metadata as the portable manifest; `$schema` is dropped because
-    Claude Code's manifest is not an Agent Plugins document.
+    Same metadata as the portable manifest, plus the listing fields; `$schema`
+    is dropped because Claude Code's manifest is not an Agent Plugins document.
     """
-    out = {}
-    for key in ("name", "description", "version", "author", "homepage",
+    if not (PLUGIN_DIR / ICON).is_file():
+        raise PluginError(f"{ICON} is missing: the Claude Code manifest points at it")
+    out = {"name": manifest["name"], "displayName": DISPLAY_NAME}
+    for key in ("description", "version", "author", "homepage",
                 "repository", "license", "keywords"):
         if key in manifest:
             out[key] = manifest[key]
+    out["icon"] = f"./{ICON}"
+    out["documentationUrl"] = manifest["homepage"]
+    out["supportUrl"] = f"{manifest['repository']}/issues"
+    out["privacyPolicyUrl"] = f"{manifest['homepage']}#privacy"
     return out
 
 
