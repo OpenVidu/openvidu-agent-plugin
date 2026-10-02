@@ -1,6 +1,6 @@
 ---
 name: openvidu-version-edition-product
-description: Establish and record which OpenVidu deployment a project targets — version, edition (CE/PRO) and product (OpenVidu Platform or OpenVidu Meet) — in its AGENTS.md/CLAUDE.md, and use those three facts when answering. Use whenever the user asks about OpenVidu, or about rooms, tracks, recording, egress, ingress, webhooks, authentication or deployment in an OpenVidu project, and before stating any OpenVidu behaviour from memory.
+description: Establish and record which OpenVidu deployment a project targets — version, edition (CE/PRO) and product (OpenVidu Platform or OpenVidu Meet) — in its AGENTS.md/CLAUDE.md, and use those three facts when answering. Use whenever the user asks about OpenVidu or for code that uses it, or about rooms, tracks, recording, egress, ingress, webhooks, authentication or deployment in an OpenVidu project, and before writing OpenVidu code or stating any OpenVidu behaviour from memory.
 compatibility: Requires the openvidu-docs MCP server (https://docs-mcp.openvidu.io/mcp) and network access.
 ---
 
@@ -18,6 +18,12 @@ to, none of which are visible in the question itself:
 Establish them **once** and write them down. Guessing produces confident
 answers about a release the user isn't running, or about an edition they don't
 have.
+
+Knowing the deployment tells you which documentation to read; it does not
+replace reading it. **Before writing or changing OpenVidu code, or stating how
+OpenVidu behaves, search the documentation for the task itself
+(`search_docs`) and read the pages that answer it (`get_doc_page`)**, even when
+the API seems familiar, and even in an empty project.
 
 ## 0. If the OpenVidu documentation tools are missing
 
@@ -49,8 +55,8 @@ to follow while doing it (credentials are never read or printed, remote hosts
 are never contacted without asking). Follow that procedure — do not improvise
 your own, and do not reproduce its steps here: the server is the single source
 of truth for them. If you cannot follow it (no project, no deployment to query,
-no user to ask), answer for the latest version and say which version, edition
-and product you assumed.
+no user to ask), carry on with the latest version and say which version,
+edition and product you assumed.
 
 ## 3. Write them down
 
