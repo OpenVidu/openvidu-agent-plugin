@@ -11,7 +11,8 @@ running**: the right version, read for the right edition and the right
 product.
 
 It is both an [Agent Plugins 1.0](https://agent-plugins.org) package and a
-[Claude Code plugin](https://code.claude.com/docs/en/plugins).
+[Claude Code plugin](https://code.claude.com/docs/en/plugins). It needs no
+account, API key or login.
 
 **Documentation: <https://openvidu.io/docs/coding-agents/agent-plugin/>**,
 with updates, setting it up by hand, and troubleshooting.
@@ -58,7 +59,8 @@ What each tool does, and how LiveKit's documentation fits in:
 The skill runs in your agent; only the MCP server is remote. Each request your
 agent makes to it is logged as one line: the tool, what it asked for (for a
 search, the search terms), the documentation version, the outcome and the
-agent's name and version. Your conversation, your prompts and your code are
+agent's name and version. What was asked is kept to learn what developers look
+for and what the documentation is missing. Your conversation, your prompts and your code are
 never sent. The IP address is used only to group a client's requests into a
 visit and is never stored; logs are deleted after 7 days, and the archive,
 which holds no addresses, after 395 days. Nothing is shared with third parties.
