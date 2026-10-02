@@ -14,7 +14,7 @@ It is both an [Agent Plugins 1.0](https://agent-plugins.org) package and a
 [Claude Code plugin](https://code.claude.com/docs/en/plugins). It needs no
 account, API key or login.
 
-**Documentation: <https://openvidu.io/docs/coding-agents/agent-plugin/>**,
+**Documentation: <https://openvidu.io/latest/docs/coding-agents/agent-plugin/>**,
 with updates, setting it up by hand, and troubleshooting.
 
 ## Install
@@ -32,7 +32,7 @@ Claude Code leaves automatic updates off for marketplaces other than
 Anthropic's: turn them on in `/plugin` → **Marketplaces** → `openvidu` →
 **Enable auto-update**. How every other client updates, and how to configure
 the server and the skill without a plugin, is on the
-[documentation page](https://openvidu.io/docs/coding-agents/agent-plugin/#install).
+[documentation page](https://openvidu.io/latest/docs/coding-agents/agent-plugin/#install).
 
 ## What you get
 
@@ -42,7 +42,7 @@ the server and the skill without a plugin, is on the
 | `openvidu-version-edition-product` skill | Establishes the version, edition and product your project targets when an answer depends on them, and pins them in `AGENTS.md` / `CLAUDE.md` |
 
 What each tool does, and how LiveKit's documentation fits in:
-[What's inside](https://openvidu.io/docs/coding-agents/agent-plugin/#whats-inside).
+[What's inside](https://openvidu.io/latest/docs/coding-agents/agent-plugin/#whats-inside).
 
 ## Try it
 
@@ -65,7 +65,7 @@ never sent. The IP address is used only to group a client's requests into a
 visit and is never stored; logs are deleted after 7 days, and the archive,
 which holds no addresses, after 395 days. Nothing is shared with third parties.
 The details are in the
-[privacy section](https://openvidu.io/docs/coding-agents/agent-plugin/#privacy).
+[privacy section](https://openvidu.io/latest/docs/coding-agents/agent-plugin/#privacy).
 
 ## Support
 
