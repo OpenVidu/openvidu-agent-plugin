@@ -18,7 +18,7 @@
         "name": "OpenVidu",
         "url": "https://openvidu.io"
       },
-      "homepage": "https://openvidu.io/latest/docs/coding-agents/agent-plugin/",
+      "homepage": "https://openvidu.io/latest/docs/building-with-ai/agent-plugin/",
       "repository": "https://github.com/OpenVidu/openvidu-agent-plugin",
       "license": "Apache-2.0",
       "keywords": [

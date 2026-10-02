@@ -55,10 +55,13 @@ MARKETPLACE_NAME = "openvidu"
 # shows up as a validation warning. `--check` (wired into the test suite) is
 # what actually stops a hand edit from surviving.
 
-# Claude Code's listing fields. The URLs derive from `homepage` and
-# `repository`; a marketplace entry must not carry any of them.
+# Claude Code's listing fields. The documentation and support URLs derive from
+# `homepage` and `repository`; the privacy policy is the documentation server's
+# notice, the plugin's only remote component. A marketplace entry must not carry
+# any of them.
 DISPLAY_NAME = "OpenVidu"
 ICON = "assets/icon.png"
+PRIVACY_POLICY_URL = "https://openvidu.io/latest/docs/building-with-ai/mcp-servers/#privacy"
 
 # Portable transport -> Claude Code transport.
 TRANSPORT_MAP = {"streamable-http": "http", "sse": "sse"}
@@ -184,7 +187,7 @@ def claude_manifest(manifest: dict) -> dict:
     out["icon"] = f"./{ICON}"
     out["documentationUrl"] = manifest["homepage"]
     out["supportUrl"] = f"{manifest['repository']}/issues"
-    out["privacyPolicyUrl"] = f"{manifest['homepage']}#privacy"
+    out["privacyPolicyUrl"] = PRIVACY_POLICY_URL
     return out
 
 

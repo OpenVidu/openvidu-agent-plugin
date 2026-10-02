@@ -14,7 +14,7 @@ It is both an [Agent Plugins 1.0](https://agent-plugins.org) package and a
 [Claude Code plugin](https://code.claude.com/docs/en/plugins). It needs no
 account, API key or login.
 
-**Documentation: <https://openvidu.io/latest/docs/coding-agents/agent-plugin/>**,
+**Documentation: <https://openvidu.io/latest/docs/building-with-ai/agent-plugin/>**,
 with updates, setting it up by hand, and troubleshooting.
 
 ## Install
@@ -32,27 +32,28 @@ Claude Code leaves automatic updates off for marketplaces other than
 Anthropic's: turn them on in `/plugin` → **Marketplaces** → `openvidu` →
 **Enable auto-update**. How every other client updates, and how to configure
 the server and the skill without a plugin, is on the
-[documentation page](https://openvidu.io/latest/docs/coding-agents/agent-plugin/#install).
+[documentation page](https://openvidu.io/latest/docs/building-with-ai/agent-plugin/#install).
 
 ## What you get
 
 | Component | What it is |
 |---|---|
-| `openvidu-docs` MCP server | OpenVidu's documentation, per version, at `https://docs-mcp.openvidu.io/mcp`. Its instructions also tell the agent when to read LiveKit's documentation for SDK detail, and what never to take from it |
+| `openvidu-docs` MCP server | OpenVidu's documentation, per version from 3.4, at `https://docs-mcp.openvidu.io/mcp`. It points the agent to LiveKit's documentation when it needs more, such as the SDK references |
 | `openvidu-version-edition-product` skill | Establishes the version, edition and product your project targets when an answer depends on them, and pins them in `AGENTS.md` / `CLAUDE.md` |
 
-What each tool does, and how LiveKit's documentation fits in:
-[What's inside](https://openvidu.io/latest/docs/coding-agents/agent-plugin/#whats-inside).
+What each tool and the skill do:
+[OpenVidu MCP servers](https://openvidu.io/latest/docs/building-with-ai/mcp-servers/) and
+[OpenVidu skills](https://openvidu.io/latest/docs/building-with-ai/skills/).
 
 ## Try it
 
-- "Using the OpenVidu docs, how do I record a room with individual tracks?"
+- "How do I record a room with individual tracks in OpenVidu?"
 - "Work out which OpenVidu version, edition and product this project uses, and
   write them into AGENTS.md."
 - "Add a backend endpoint that creates an OpenVidu Meet room and returns the
-  URL our frontend passes to the web component. Check the docs for our
-  version."
-- "Does the Egress service need S3 credentials, and how are they configured?"
+  URL our frontend passes to the web component."
+- "Does the OpenVidu Egress service need S3 credentials, and how are they
+  configured?"
 
 ## Data and privacy
 
@@ -65,7 +66,7 @@ never sent. The IP address is used only to group a client's requests into a
 visit and is never stored; logs are deleted after 7 days, and the archive,
 which holds no addresses, after 395 days. Nothing is shared with third parties.
 The details are in the
-[privacy section](https://openvidu.io/latest/docs/coding-agents/agent-plugin/#privacy).
+[privacy section](https://openvidu.io/latest/docs/building-with-ai/mcp-servers/#privacy).
 
 ## Support
 

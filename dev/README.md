@@ -1,7 +1,7 @@
 # Developing the OpenVidu Agent Plugin
 
 *This is the development documentation. The documentation for the people who
-**use** the plugin is <https://openvidu.io/latest/docs/coding-agents/agent-plugin/>,
+**use** the plugin is <https://openvidu.io/latest/docs/building-with-ai/agent-plugin/>,
 summarised in [`../README.md`](../README.md).*
 
 The repository **is** the plugin: an [Agent Plugins 1.0](https://agent-plugins.org)
@@ -117,8 +117,8 @@ marketplaces sync from it. The release procedure is therefore
 
 The user documentation — installation per client, updates, the by-hand
 setup, troubleshooting — lives on openvidu.io, at
-<https://openvidu.io/latest/docs/coding-agents/agent-plugin/> (sources in
-`docs/docs/coding-agents/` of the openvidu.io repository), which is what
+<https://openvidu.io/latest/docs/building-with-ai/agent-plugin/> (sources in
+`docs/docs/building-with-ai/` of the openvidu.io repository), which is what
 `plugin.json`'s `homepage` points at. `README.md`, what GitHub shows, is a
 short summary that links there. So a change to `mcp.json` or `skills/` has a
 second half on openvidu.io, whose pages list every server, tool and skill.

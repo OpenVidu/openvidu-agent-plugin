@@ -26,7 +26,7 @@ This skill works with the `openvidu-docs` MCP server (`search_docs`,
 available, the skill was installed on its own: tell the user to add the
 server, `https://docs-mcp.openvidu.io/mcp` (Streamable HTTP, no
 authentication), or to install the OpenVidu Agent Plugin, as described at
-https://openvidu.io/latest/docs/coding-agents/agent-plugin/. Until then, say that
+https://openvidu.io/latest/docs/building-with-ai/agent-plugin/. Until then, say that
 your answers come from memory and may not match their release.
 
 ## 1. Look for them in the project first

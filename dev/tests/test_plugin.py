@@ -122,7 +122,7 @@ def test_claude_manifest_carries_the_listing_fields(manifest):
     icon = PLUGIN_DIR / generated["icon"]
     assert icon.is_file() and icon.read_bytes()[:8] == b"\x89PNG\r\n\x1a\n"
     assert generated["documentationUrl"] == manifest["homepage"]
-    assert generated["privacyPolicyUrl"] == manifest["homepage"] + "#privacy"
+    assert generated["privacyPolicyUrl"] == bp.PRIVACY_POLICY_URL
     assert generated["supportUrl"] == manifest["repository"] + "/issues"
 
 
