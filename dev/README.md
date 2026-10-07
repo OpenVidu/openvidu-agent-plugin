@@ -104,16 +104,38 @@ changes), minor for a new skill or tool, patch for wording.
 
 ## Publishing
 
-A push to this repository *is* the publish: clients install from it, and
-marketplaces sync from it. The release procedure is therefore
+Clients that install from this repository take a new version from `main`:
+Claude Code through the `openvidu` marketplace, VS Code, Copilot CLI, Codex,
+Cursor, Kiro and `npx skills`. Two directories decide themselves what they
+list, and each needs a step of its own. The release procedure is therefore
 
 1. Edit `plugin.json`, `mcp.json`, `skills/` or `README.md`.
 2. Bump `version` in `plugin.json`, and add its entry to `CHANGELOG.md`.
 3. `python build_plugin.py` to regenerate the Claude Code files.
 4. `pytest` — a package is only ever exercised by someone else's client, so
    the suite is the last check before it reaches one.
-5. Commit, push, and tag the commit `v<version>`: some marketplaces pin a
-   release by an immutable tag.
+5. Commit, push, and tag the commit `v<version>`, with a GitHub release that
+   carries its `CHANGELOG.md` entry: awesome-copilot pins a release by an
+   immutable tag and SHA.
+6. **Anthropic's directory** follows `main` and scans every push as a new
+   version, but serves only the one published. Once the release commit passes
+   the scan, an Owner of NaevaTec, the Claude organization the listing belongs
+   to, selects **Publish** on the plugin's page in
+   `claude.ai/directory/manage`, and a reviewer at Anthropic publishes it.
+   Until then the directory keeps serving the previous version. Commits
+   between releases are scanned too: leave them unpublished.
+7. **awesome-copilot** lists a fixed tag and SHA. Open a pull request to
+   `github/awesome-copilot` that sets `version`, `source.ref` (the new tag)
+   and `source.sha` (`git rev-parse 'v<version>^{commit}'`) of the `openvidu`
+   entry in `plugins/external.json`, as their `CONTRIBUTING.md` describes
+   under *Updating listed external plugins via PR*. Their automation runs the
+   install and lint checks of the first submission
+   (github/awesome-copilot#4584), and a maintainer merges it. The listing is
+   re-reviewed every six months, on that issue.
+
+Nothing else follows a release: skills.sh reads this repository, and the
+official MCP Registry lists the documentation server (`io.openvidu/docs`),
+not this package.
 
 The user documentation — installation per client, updates, the by-hand
 setup, troubleshooting — lives on openvidu.io, at
