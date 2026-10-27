@@ -104,16 +104,29 @@ changes), minor for a new skill or tool, patch for wording.
 
 ## Publishing
 
-A push to this repository *is* the publish: clients install from it, and
-marketplaces sync from it. The release procedure is therefore
+Clients that install from this repository take a new version from `main`:
+Claude Code through the `openvidu` marketplace, VS Code, Copilot CLI, Codex,
+Cursor, Kiro and `npx skills`. Anthropic's directory decides itself what it
+lists, and needs a step of its own. The release procedure is therefore
 
 1. Edit `plugin.json`, `mcp.json`, `skills/` or `README.md`.
 2. Bump `version` in `plugin.json`, and add its entry to `CHANGELOG.md`.
 3. `python build_plugin.py` to regenerate the Claude Code files.
 4. `pytest` — a package is only ever exercised by someone else's client, so
    the suite is the last check before it reaches one.
-5. Commit, push, and tag the commit `v<version>`: some marketplaces pin a
-   release by an immutable tag.
+5. Commit, push, and tag the commit `v<version>`, with a GitHub release that
+   carries its `CHANGELOG.md` entry.
+6. **Anthropic's directory** follows `main` and scans every push as a new
+   version, but serves only the one published. Once the release commit passes
+   the scan, an Owner of NaevaTec, the Claude organization the listing belongs
+   to, selects **Publish** on the plugin's page in
+   `claude.ai/directory/manage`, and a reviewer at Anthropic publishes it.
+   Until then the directory keeps serving the previous version. Commits
+   between releases are scanned too: leave them unpublished.
+
+Nothing else follows a release: skills.sh reads this repository, and the
+official MCP Registry lists the documentation server (`io.openvidu/docs`),
+not this package.
 
 The user documentation — installation per client, updates, the by-hand
 setup, troubleshooting — lives on openvidu.io, at
