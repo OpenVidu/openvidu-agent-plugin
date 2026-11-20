@@ -104,16 +104,17 @@ changes), minor for a new skill or tool, patch for wording.
 
 ## Publishing
 
-A push to this repository *is* the publish: clients install from it, and
-marketplaces sync from it. The release procedure is therefore
+Clients that install from this repository take a new version from `main`:
+Claude Code through the `openvidu` marketplace, VS Code, Copilot CLI, Codex,
+Cursor, Kiro and `npx skills`. The release procedure is therefore
 
 1. Edit `plugin.json`, `mcp.json`, `skills/` or `README.md`.
 2. Bump `version` in `plugin.json`, and add its entry to `CHANGELOG.md`.
 3. `python build_plugin.py` to regenerate the Claude Code files.
 4. `pytest` — a package is only ever exercised by someone else's client, so
    the suite is the last check before it reaches one.
-5. Commit, push, and tag the commit `v<version>`: some marketplaces pin a
-   release by an immutable tag.
+5. Commit, push, and tag the commit `v<version>`, with a GitHub release that
+   carries its `CHANGELOG.md` entry.
 
 The user documentation — installation per client, updates, the by-hand
 setup, troubleshooting — lives on openvidu.io, at
