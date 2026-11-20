@@ -2,7 +2,7 @@
   "name": "openvidu",
   "displayName": "OpenVidu",
   "description": "The official OpenVidu documentation for coding agents, matched to the version, edition and product of the deployment they are working against.",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "author": {
     "name": "OpenVidu",
     "url": "https://openvidu.io"

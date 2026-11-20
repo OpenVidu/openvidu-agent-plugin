@@ -86,19 +86,13 @@ skills/                         one directory per skill, each with a SKILL.md
 assets/icon.png                 the plugin's icon
 CHANGELOG.md                    what each version changed
 LICENSE                         Apache 2.0
-dev/                            not part of the plugin: how it is built,
-                                validated and published
+AGENTS.md                       the rules for changing the package
 ```
 
 ## Development
 
-Everything about building, validating and publishing the package lives in
-**[`dev/README.md`](dev/README.md)**: what is generated and why, how the
-version numbers work, how to add a skill, and the checklist before a release.
-
-```bash
-cd dev
-pip install -r requirements.txt
-python build_plugin.py    # validate the package + regenerate the Claude Code files
-pytest
-```
+The Claude Code files (`.claude-plugin/` and `.mcp.json`) are generated from
+`plugin.json` and `mcp.json` by the OpenVidu team's build tooling, kept outside
+this repository so the plugin carries only what clients load. The rules for
+changing the package are in [`AGENTS.md`](AGENTS.md). To propose a change,
+open an issue, or a pull request that edits the portable files.

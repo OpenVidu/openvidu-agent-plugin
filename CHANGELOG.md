@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.0.1
+
+- The plugin no longer carries its development tooling: the package holds
+  only what clients load. The server and the skill are unchanged.
+
 ## 1.0.0
 
 The first public release.

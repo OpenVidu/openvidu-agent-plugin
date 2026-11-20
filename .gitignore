@@ -1,10 +1,3 @@
-# Python (dev/ is the validation tooling, not shipped code)
-__pycache__/
-*.py[cod]
-.pytest_cache/
-.venv/
-venv/
-
 # Editor / OS
 .DS_Store
 .idea/
